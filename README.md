@@ -5,6 +5,7 @@ GDPR, in German: "Datenschutz-Grundverordnung", DSGVO).
 
 > [!NOTE]
 > **Legal disclaimer**
+> 
 > Use this bundle at your own risk. Although we as the developer try our best to design this bundle to fulfill the legal
 > requirements we __CAN'T GUARANTEE__ anything in terms completeness and correctness. Also we don't offer any legal
 > consulting. We strongly encourage you to consult a lawyer if you have any questions or concerns.
