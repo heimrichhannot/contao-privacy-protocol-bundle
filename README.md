@@ -1,13 +1,20 @@
-# Contao Privacy Bundle
+# Contao Privacy Protocol Bundle
+
+This bundle add a privacy logging entity to contao as required by the European Union's "General Data Protection Regulation" (
+GDPR, in German: "Datenschutz-Grundverordnung", DSGVO).
+
+> [!NOTE]
+> **Legal disclaimer**
+> Use this bundle at your own risk. Although we as the developer try our best to design this bundle to fulfill the legal
+> requirements we __CAN'T GUARANTEE__ anything in terms completeness and correctness. Also we don't offer any legal
+> consulting. We strongly encourage you to consult a lawyer if you have any questions or concerns.
+
+
+# OLD README - Contao Privacy Bundle
 
 This bundle contains functionality concerning privacy and the European Union's "General Data Protection Regulation" (
 GDPR, in German: "Datenschutz-Grundverordnung", DSGVO).
 
-## Legal disclaimer
-
-Use this bundle at your own risk. Although we as the developer try our best to design this bundle to fulfill the legal
-requirements we __CAN'T GUARANTEE__ anything in terms completeness and correctness. Also we don't offer any legal
-consulting. We strongly encourage you to consult a lawyer if you have any questions or concerns.
 
 ## Features
 
