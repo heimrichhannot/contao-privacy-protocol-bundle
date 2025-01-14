@@ -13,4 +13,9 @@ enum ProtocolType: string
     case CREATE = 'create';
     case UPDATE = 'update';
     case DELETE = 'delete';
+
+    public static function values(): array
+    {
+        return array_column(self::cases(), 'value');
+    }
 }

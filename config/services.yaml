@@ -1,0 +1,11 @@
+services:
+
+  HeimrichHannot\PrivacyProtocolBundle\:
+    resource: '../src/{DataContainer}/*'
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  HeimrichHannot\PrivacyProtocolBundle\ProtocolPrivacyProtocolLogger:
+    autowire: true
+    public: true

@@ -6,6 +6,10 @@
  * @license LGPL-3.0-or-later
  */
 
+use HeimrichHannot\PrivacyBundle\DataContainer\ProtocolEntryContainer;
+use HeimrichHannot\PrivacyProtocolBundle\Protocol\ProtocolCmsScope;
+use HeimrichHannot\PrivacyProtocolBundle\Protocol\ProtocolType;
+
 $lang = &$GLOBALS['TL_LANG']['tl_privacy_protocol_entry'];
 
 /*
@@ -79,20 +83,19 @@ $lang['codeStacktrace'][1] = 'In diesem Feld wird der Stacktrace zur aufrufenden
 /*
  * Reference
  */
-//$lang['reference'] = [
-//    \HeimrichHannot\PrivacyBundle\DataContainer\ProtocolEntryContainer::TYPE_FIRST_OPT_IN => 'Erstes Opt-In',
-//    \HeimrichHannot\PrivacyBundle\DataContainer\ProtocolEntryContainer::TYPE_SECOND_OPT_IN => 'Zweites Opt-In',
-//    \HeimrichHannot\PrivacyBundle\DataContainer\ProtocolEntryContainer::TYPE_FIRST_OPT_OUT => 'Erstes Opt-Out',
-//    \HeimrichHannot\PrivacyBundle\DataContainer\ProtocolEntryContainer::TYPE_SECOND_OPT_OUT => 'Zweites Opt-Out',
-//    \HeimrichHannot\PrivacyBundle\DataContainer\ProtocolEntryContainer::TYPE_OPT_IN => 'Opt-In',
-//    \HeimrichHannot\PrivacyBundle\DataContainer\ProtocolEntryContainer::TYPE_OPT_OUT => 'Opt-Out',
-//    \HeimrichHannot\PrivacyBundle\DataContainer\ProtocolEntryContainer::TYPE_CREATE => 'Datensatz erstellt',
-//    \HeimrichHannot\PrivacyBundle\DataContainer\ProtocolEntryContainer::TYPE_UPDATE => 'Datensatz bearbeitet',
-//    \HeimrichHannot\PrivacyBundle\DataContainer\ProtocolEntryContainer::TYPE_DELETE => 'Datensatz gelöscht',
-//    \HeimrichHannot\PrivacyBundle\DataContainer\ProtocolEntryContainer::CMS_SCOPE_BACKEND => 'Backend',
-//    \HeimrichHannot\PrivacyBundle\DataContainer\ProtocolEntryContainer::CMS_SCOPE_FRONTEND => 'Frontend',
-//    \HeimrichHannot\PrivacyBundle\DataContainer\ProtocolEntryContainer::CMS_SCOPE_BOTH => 'Beide',
-//];
+$lang['reference'] = [
+    ProtocolType::FIRST_OPT_IN->value => 'Erstes Opt-In',
+    ProtocolType::SECOND_OPT_IN->value => 'Zweites Opt-In',
+    ProtocolType::FIRST_OPT_OUT->value => 'Erstes Opt-Out',
+    ProtocolType::SECOND_OPT_OUT->value => 'Zweites Opt-Out',
+    ProtocolType::OPT_IN->value => 'Opt-In',
+    ProtocolType::OPT_OUT->value => 'Opt-Out',
+    ProtocolType::CREATE->value => 'Datensatz erstellt',
+    ProtocolType::UPDATE->value => 'Datensatz bearbeitet',
+    ProtocolType::DELETE->value => 'Datensatz gelöscht',
+    ProtocolCmsScope::BACKEND->value => 'Backend',
+    ProtocolCmsScope::FRONTEND->value => 'Frontend',
+];
 
 /*
  * Legends

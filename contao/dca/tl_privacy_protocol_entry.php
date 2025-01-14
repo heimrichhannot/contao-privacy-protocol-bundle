@@ -7,11 +7,15 @@
  */
 
 use Contao\DC_Table;
+use HeimrichHannot\PrivacyProtocolBundle\Protocol\ProtocolCmsScope;
+use HeimrichHannot\PrivacyProtocolBundle\Protocol\ProtocolType;
+use HeimrichHannot\UtilsBundle\Dca\AuthorField;
 use HeimrichHannot\UtilsBundle\Dca\DateAddedField;
 
 DateAddedField::register('tl_privacy_protocol_entry')
     ->setFlag(8)
     ->setSorting(true);
+AuthorField::register('tl_privacy_protocol_entry');
 
 $GLOBALS['TL_DCA']['tl_privacy_protocol_entry'] = [
     'config' => [
@@ -31,7 +35,7 @@ $GLOBALS['TL_DCA']['tl_privacy_protocol_entry'] = [
         'sorting' => [
             'mode' => 4,
             'fields' => ['dateAdded DESC'],
-            'headerFields' => ['title'],
+            'headerFields' => ['title', 'addCodeProtocol'],
             'panelLayout' => 'filter;sort,search,limit',
         ],
         'global_operations' => [
@@ -57,10 +61,13 @@ $GLOBALS['TL_DCA']['tl_privacy_protocol_entry'] = [
     ],
     'palettes' => [
         '__selector__' => [],
-        'default' => '{type_date_legend},type,dateAdded,authorType,author;'
+        'default' => '{type_date_legend},type,dateAdded,author;'
             .'{data_legend},data,ip,email;'
-            .'{user_legend},member,user;'
-            .'{interaction_legend},url,cmsScope,bundle,bundleVersion,dataContainer,description,module,moduleName,moduleType,element,elementType;'.'{code_legend},codeFile,codeLine,codeFunction,codeStacktrace;',
+            .'{interaction_legend},url,cmsScope,bundle,bundleVersion,dataContainer,description,module,element;'.'{code_legend},codeStacktrace;',
+//        'default' => '{type_date_legend},type,dateAdded,author;'
+//            .'{data_legend},data,ip,email;'
+//            .'{user_legend},member,user;'
+//            .'{interaction_legend},url,cmsScope,bundle,bundleVersion,dataContainer,description,module,moduleName,moduleType,element,elementType;'.'{code_legend},codeFile,codeLine,codeFunction,codeStacktrace;',
     ],
     'fields' => [
         'id' => [
@@ -84,15 +91,6 @@ $GLOBALS['TL_DCA']['tl_privacy_protocol_entry'] = [
             'inputType' => 'text',
             'eval' => ['rgxp' => 'datim', 'datepicker' => true, 'timepicker' => true, 'doNotCopy' => true, 'mandatory' => true, 'tl_class' => 'w50'],
             'sql' => "varchar(64) NOT NULL default ''",
-        ],
-        // user
-        'personalDataExplanation' => [
-            'inputType' => 'explanation',
-            'eval' => [
-                'text' => &$GLOBALS['TL_LANG']['tl_privacy_protocol_entry']['personalDataExplanation'], // this is a string, not an array
-                'class' => 'tl_info',
-                'tl_class' => 'long',
-            ],
         ],
         'ip' => [
             'label' => &$GLOBALS['TL_LANG']['tl_privacy_protocol_entry']['ip'],
@@ -188,11 +186,12 @@ $GLOBALS['TL_DCA']['tl_privacy_protocol_entry'] = [
             'sql' => 'text NULL',
         ],
         'cmsScope' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_privacy_protocol_entry']['cmsScope'],
             'exclude' => true,
             'filter' => true,
             'inputType' => 'select',
-//            'options' => \HeimrichHannot\PrivacyBundle\DataContainer\ProtocolEntryContainer::CMS_SCOPES,
+            'options_callback' => static function () {
+                return ProtocolCmsScope::values();
+            },
             'reference' => &$GLOBALS['TL_LANG']['tl_privacy_protocol_entry']['reference'],
             'eval' => ['tl_class' => 'w50', 'mandatory' => true, 'submitOnChange' => true, 'includeBlankOption' => true],
             'sql' => "varchar(16) NOT NULL default ''",
@@ -222,17 +221,17 @@ $GLOBALS['TL_DCA']['tl_privacy_protocol_entry'] = [
             'sql' => "varchar(64) NOT NULL default ''",
         ],
         'type' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_privacy_protocol_entry']['type'],
             'exclude' => true,
             'filter' => true,
             'inputType' => 'select',
-//            'options' => \HeimrichHannot\PrivacyBundle\DataContainer\ProtocolEntryContainer::TYPES,
+            'options_callback' => static function () {
+                return ProtocolType::values();
+            },
             'reference' => &$GLOBALS['TL_LANG']['tl_privacy_protocol_entry']['reference'],
             'eval' => ['tl_class' => 'w50', 'mandatory' => true, 'includeBlankOption' => true, 'chosen' => true],
             'sql' => "varchar(32) NOT NULL default ''",
         ],
         'description' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_privacy_protocol_entry']['description'],
             'exclude' => true,
             'search' => true,
             'inputType' => 'textarea',
@@ -241,14 +240,13 @@ $GLOBALS['TL_DCA']['tl_privacy_protocol_entry'] = [
         ],
         'data' => [
             'inputType' => 'textarea',
-            'eval' => ['readonly' => true],
+            'eval' => [
+                'readonly' => false,
+                'decodeEntities' => true,
+            ],
             'sql' => ['type' => 'blob', 'notnull' => false],
         ],
-
-
-
         'additionalData' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_privacy_protocol_entry']['additionalData'],
             'exclude' => true,
             'search' => true,
             'inputType' => 'textarea',
@@ -256,59 +254,27 @@ $GLOBALS['TL_DCA']['tl_privacy_protocol_entry'] = [
             'sql' => 'text NULL',
         ],
         'module' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_privacy_protocol_entry']['module'],
             'exclude' => true,
             'filter' => true,
-            'inputType' => 'select',
-//            'options_callback' => ['tl_content', 'getModules'],
-//            'wizard' => [
-//                ['tl_content', 'editModule'],
-//            ],
+            'inputType' => 'picker',
+            'relation'   => [
+                'type' => 'belongsTo',
+                'load' => 'lazy',
+                'table' => 'tl_content',
+            ],
             'eval' => ['tl_class' => 'w50', 'includeBlankOption' => true, 'submitOnChange' => true],
-            'sql' => "varchar(64) NOT NULL default ''",
-        ],
-        'moduleName' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_privacy_protocol_entry']['module'],
-            'exclude' => true,
-            'search' => true,
-            'inputType' => 'text',
-            'eval' => ['maxlength' => 255, 'tl_class' => 'w50'],
-            'sql' => "varchar(255) NOT NULL default ''",
-        ],
-        'moduleType' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_privacy_protocol_entry']['moduleType'],
-            'exclude' => true,
-            'search' => true,
-            'inputType' => 'text',
-            'eval' => ['maxlength' => 64, 'tl_class' => 'w50'],
             'sql' => "varchar(64) NOT NULL default ''",
         ],
         'element' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_privacy_protocol_entry']['element'],
             'exclude' => true,
             'filter' => true,
-            'inputType' => 'select',
-//            'options_callback' => ['tl_content', 'getAlias'],
-//            'wizard' => [
-//                ['tl_content', 'editAlias'],
-//            ],
+            'inputType' => 'picker',
+            'relation'   => [
+                'type' => 'belongsTo',
+                'load' => 'lazy',
+                'table' => 'tl_content',
+            ],
             'eval' => ['tl_class' => 'w50', 'includeBlankOption' => true, 'submitOnChange' => true],
-            'sql' => "varchar(64) NOT NULL default ''",
-        ],
-        'elementName' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_privacy_protocol_entry']['element'],
-            'exclude' => true,
-            'search' => true,
-            'inputType' => 'text',
-            'eval' => ['maxlength' => 255, 'tl_class' => 'w50'],
-            'sql' => "varchar(255) NOT NULL default ''",
-        ],
-        'elementType' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_privacy_protocol_entry']['elementType'],
-            'exclude' => true,
-            'search' => true,
-            'inputType' => 'text',
-            'eval' => ['maxlength' => 64, 'tl_class' => 'w50'],
             'sql' => "varchar(64) NOT NULL default ''",
         ],
         'codeFile' => [

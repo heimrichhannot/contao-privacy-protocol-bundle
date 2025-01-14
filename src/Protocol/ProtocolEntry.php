@@ -2,7 +2,8 @@
 
 namespace HeimrichHannot\PrivacyProtocolBundle\Protocol;
 
-use Contao\MemberModel;
+use Contao\ContentModel;
+use Contao\ModuleModel;
 use Contao\UserModel;
 
 class ProtocolEntry
@@ -21,5 +22,7 @@ class ProtocolEntry
     public ?string $codeFunction = null;
     public ?string $codeStacktrace = null;
     public ?string $dataContainer = null;
-    public UserModel|MemberModel|null $author = null;
+    public UserModel|null $author = null;
+    public ContentModel|int|null $contentElement = null;
+    public ModuleModel|int|null $module = null;
 }

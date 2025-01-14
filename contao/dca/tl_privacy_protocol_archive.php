@@ -40,13 +40,13 @@ $GLOBALS['TL_DCA']['tl_privacy_protocol_archive'] = [
             ],
         ],
         'operations' => [
-            'editheader' => [
-                'label' => &$GLOBALS['TL_LANG']['tl_privacy_protocol_archive']['editheader'],
+            'edit' => [
+                'label' => &$GLOBALS['TL_LANG']['tl_privacy_protocol_archive']['edit'],
                 'href' => 'act=edit',
                 'icon' => 'edit.svg',
             ],
-            'edit' => [
-                'label' => &$GLOBALS['TL_LANG']['tl_privacy_protocol_archive']['edit'],
+            'children' => [
+                'label' => &$GLOBALS['TL_LANG']['tl_privacy_protocol_archive']['children'],
                 'href' => 'table=tl_privacy_protocol_entry',
                 'icon' => 'bundles/heimrichhannotprivacyprotocol/img/children.svg',
             ],
@@ -70,17 +70,7 @@ $GLOBALS['TL_DCA']['tl_privacy_protocol_archive'] = [
         ],
     ],
     'palettes' => [
-        '__selector__' => [
-            'addCodeProtocol',
-            'addReferenceEntity',
-            'addEntryTypeToReferenceFieldOnChange',
-        ],
-        'default' => '{general_legend},title;{config_legend},titlePattern,skipCodeProtocol,skipIpAnonymization;',
-    ],
-    'subpalettes' => [
-        'addCodeProtocol' => 'codeFields',
-        'addReferenceEntity' => 'referenceFieldTable,referenceFieldForeignKey,referenceFieldProtocolForeignKey,createInstanceOnChange,referenceTimestampField,addEntryTypeToReferenceFieldOnChange',
-        'addEntryTypeToReferenceFieldOnChange' => 'referenceEntryTypeField',
+        'default' => '{general_legend},title;{config_legend},titlePattern,addCodeProtocol,skipIpAnonymization;',
     ],
     'fields' => [
         'id' => [
@@ -108,7 +98,12 @@ $GLOBALS['TL_DCA']['tl_privacy_protocol_archive'] = [
         'titlePattern' => [
             'exclude' => true,
             'inputType' => 'text',
-            'eval' => ['maxlength' => 128, 'tl_class' => 'w50', 'mandatory' => true],
+            'eval' => [
+                'maxlength' => 128,
+                'tl_class' => 'w50',
+                'mandatory' => true,
+                'decodeEntities' => true,
+                ],
             'sql' => "varchar(128) NOT NULL default ''",
         ],
         'skipIpAnonymization' => [
@@ -118,17 +113,11 @@ $GLOBALS['TL_DCA']['tl_privacy_protocol_archive'] = [
             'eval' => ['tl_class' => 'w50'],
             'sql' => "char(1) NOT NULL default ''",
         ],
-        'skipCodeProtocol' => [
-            'exclude' => true,
-            'inputType' => 'checkbox',
-            'eval' => ['tl_class' => 'w50'],
-            'sql' => "char(1) NOT NULL default ''",
-        ],
         'addCodeProtocol' => [
             'label' => &$GLOBALS['TL_LANG']['tl_privacy_protocol_archive']['addCodeProtocol'],
             'exclude' => true,
             'inputType' => 'checkbox',
-            'eval' => ['tl_class' => 'w50', 'submitOnChange' => true],
+            'eval' => ['tl_class' => 'w50 clr'],
             'sql' => "char(1) NOT NULL default ''",
         ],
         'codeFields' => [

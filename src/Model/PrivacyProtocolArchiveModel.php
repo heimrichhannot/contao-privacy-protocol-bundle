@@ -13,7 +13,7 @@ use Contao\Model;
 /**
  * @property int    $id
  * @property string $title
- * @property bool|string $skipCodeProtocol
+ * @property bool|string $addCodeProtocol
  * @property bool|string $skipIpAnonymization
  */
 class PrivacyProtocolArchiveModel extends Model

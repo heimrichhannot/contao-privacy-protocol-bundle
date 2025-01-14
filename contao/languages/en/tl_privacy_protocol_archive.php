@@ -18,6 +18,7 @@ $lang['general_legend'] = 'General settings';
  */
 $lang['new'] = ['New Protokollarchiv', 'Protokollarchiv create'];
 $lang['edit'] = ['Edit Protokollarchiv', 'Edit Protokollarchiv ID %s'];
+$lang['children'] = ['Show entries', 'Show entries of Protokollarchiv ID %s'];
 $lang['copy'] = ['Duplicate Protokollarchiv', 'Duplicate Protokollarchiv ID %s'];
 $lang['delete'] = ['Delete Protokollarchiv', 'Delete Protokollarchiv ID %s'];
 $lang['toggle'] = ['Publish/unpublish Protokollarchiv', 'Publish/unpublish Protokollarchiv ID %s'];

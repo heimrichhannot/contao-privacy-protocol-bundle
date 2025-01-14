@@ -55,6 +55,7 @@ $lang['config_legend']  = 'Configurazione';
  */
 $lang['new']    = ['Nuovo archivio di log', 'Crea archivio di log'];
 $lang['edit']   = ['Modifica archivio di log', 'Modifica l\'archivio di log con ID %s'];
+$lang['children'] = ['Mostra voci', 'Mostra le voci dell\'archivio di log con ID %s'];
 $lang['copy']   = ['Duplica archivio di log', 'Duplica l\'archivio di log con ID %s'];
 $lang['delete'] = ['Cancella archivio di log', 'Cancella l\'archivio di log con ID %s'];
 $lang['toggle'] = ['Pubblica archivio log', 'Pubblica / nascondi l\'archivio di log con ID %s'];

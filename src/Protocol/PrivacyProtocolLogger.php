@@ -2,16 +2,14 @@
 
 namespace HeimrichHannot\PrivacyProtocolBundle\Protocol;
 
-use Contao\BackendUser;
+use Composer\InstalledVersions;
+use Contao\ContentModel;
 use Contao\CoreBundle\Routing\ScopeMatcher;
-use Contao\FrontendUser;
-use Contao\MemberModel;
+use Contao\ModuleModel;
 use Contao\System;
-use Contao\UserModel;
 use HeimrichHannot\PrivacyProtocolBundle\Model\PrivacyProtocolArchiveModel;
 use HeimrichHannot\PrivacyProtocolBundle\Model\PrivacyProtocolEntryModel;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Security\Core\Security;
 
 class PrivacyProtocolLogger
 {
@@ -20,11 +18,14 @@ class PrivacyProtocolLogger
     public function __construct(
         private readonly RequestStack $requestStack,
         private readonly ScopeMatcher $scopeMatcher,
-        private readonly Security $security
     )
     {
     }
 
+
+    /**
+     * @throws \JsonException
+     */
     public function log(ProtocolEntry $entry): void
     {
         $archive = PrivacyProtocolArchiveModel::findByPk($entry->archiveId);
@@ -37,6 +38,7 @@ class PrivacyProtocolLogger
         $protocolEntry->tstamp = $protocolEntry->dateAdded = time();
         $protocolEntry->pid = $archive->id;
         $protocolEntry->type = $entry->type->value;
+        $protocolEntry->data = json_encode($entry->data, JSON_THROW_ON_ERROR);
 
         $this->code($protocolEntry, $entry, $archive);
 
@@ -55,27 +57,37 @@ class PrivacyProtocolLogger
             $protocolEntry->cmsScope = $this->scopeMatcher->isBackendRequest($this->requestStack->getCurrentRequest()) ? ProtocolCmsScope::BACKEND : ProtocolCmsScope::FRONTEND;
         }
 
-        $author = $entry->author ?? $this->security->getUser();
-        if ($author instanceof UserModel || $author instanceof BackendUser) {
-            $protocolEntry->author = $author->id;
-            $protocolEntry->authorType = 'user';
-        } elseif ($author instanceof MemberModel || $author instanceof FrontendUser) {
-            $protocolEntry->author = $author->id;
-            $protocolEntry->authorType = 'member';
+        if ($entry->url) {
+            $protocolEntry->url = $entry->url;
+        } else {
+            $protocolEntry->url = $this->requestStack->getCurrentRequest()?->getUri();
         }
+
+        $protocolEntry->bundle = $entry->packageName;
+        if ($entry->packageVersion) {
+            $protocolEntry->bundleVersion = $entry->packageVersion;
+        } elseif ($entry->packageName) {
+            $protocolEntry->bundleVersion = InstalledVersions::getVersion($entry->packageName);
+        }
+
+        $protocolEntry->dataContainer = $entry->dataContainer;
+
+        $protocolEntry->module = $entry->module instanceof ModuleModel ? $entry->module->id : $entry->module;
+        $protocolEntry->contentElement = $entry->contentElement instanceof ContentModel ? $entry->contentElement->id : $entry->contentElement;
+
 
         $protocolEntry->save();
     }
 
     private function code(PrivacyProtocolEntryModel $model, ProtocolEntry $entry, PrivacyProtocolArchiveModel $archive): void
     {
-        if ($archive->skipCodeProtocol) {
+        if (!$archive->addCodeProtocol) {
             return;
         }
 
         $this->stackTrace = null;
 
-        $model->code =
+        $model->codeStacktrace =
             ($entry->codeFile ?? $this->getRelevantStackTrace()['file'] ?? '') . ':'
             . ($entry->codeFunction ?? $this->getRelevantStackTrace()['function'] ?? '')
             . '(' . ($entry->codeLine ?? $this->getRelevantStackTrace()['line'] ?? '') . ")\n"

@@ -6,6 +6,15 @@
 
 use HeimrichHannot\PrivacyProtocolBundle\Model\PrivacyProtocolArchiveModel;
 use HeimrichHannot\PrivacyProtocolBundle\Model\PrivacyProtocolEntryModel;
+use HeimrichHannot\UtilsBundle\StaticUtil\SUtils;
+
+$beModules = &$GLOBALS['BE_MOD'];
+SUtils::array()::insertBeforeKey(
+    $beModules,
+    'system',
+    'privacy',
+    [
+    ]);
 
 $GLOBALS['BE_MOD']['privacy']['protocols'] = [
     'tables' => ['tl_privacy_protocol_archive', 'tl_privacy_protocol_entry'],

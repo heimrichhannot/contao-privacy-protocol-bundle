@@ -2,10 +2,15 @@
 
 namespace HeimrichHannot\PrivacyProtocolBundle\DataContainer;
 
+use Contao\Backend;
+use Contao\BackendUser;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsCallback;
 use Contao\CoreBundle\Exception\AccessDeniedException;
+use Contao\CoreBundle\Security\ContaoCorePermissions;
+use Contao\CoreBundle\ServiceAnnotation\Callback;
 use Contao\Database;
 use Contao\DataContainer;
+use Contao\Image;
 use Contao\Input;
 use Contao\StringUtil;
 use HeimrichHannot\PrivacyProtocolBundle\Security\PrivacyProtocolPermissions;
@@ -38,6 +43,60 @@ class PrivacyProtocolArchiveContainer
     public function onConfigCopyCallback(int $insertId): void
     {
         $this->adjustPermissions($insertId);
+    }
+
+    /**
+     * @Callback(table="tl_privacy_protocol_archive", target="list.operations.edit.button")
+     */
+    public function onListOperationsEditButtonCallback(array $row, ?string $href, string $label, string $title, ?string $icon, string $attributes,): string
+    {
+        if (!$this->security->isGranted(ContaoCorePermissions::USER_CAN_EDIT_FIELDS_OF_TABLE, 'tl_privacy_protocol_archive')) {
+            return '';
+        }
+
+        return sprintf(
+            '<a href="%s" title="%s"%s>%s</a> ',
+            Backend::addToUrl($href . '&amp;id=' . $row['id']),
+            StringUtil::specialchars($title),
+            $attributes,
+            Image::getHtml($icon, $label)
+        );
+    }
+
+    /**
+     * @Callback(table="tl_privacy_protocol_archive", target="list.operations.copy.button")
+     */
+    public function onListOperationsCopyButtonCallback(array $row, ?string $href, string $label, string $title, ?string $icon, string $attributes,): string
+    {
+        if (!$this->security->isGranted(PrivacyProtocolPermissions::USER_CAN_CREATE_ARCHIVES)) {
+            return '';
+        }
+
+        return sprintf(
+            '<a href="%s" title="%s"%s>%s</a> ',
+            Backend::addToUrl($href . '&amp;id=' . $row['id']),
+            StringUtil::specialchars($title),
+            $attributes,
+            Image::getHtml($icon, $label)
+        );
+    }
+
+    /**
+     * @Callback(table="tl_privacy_protocol_archive", target="list.operations.delete.button")
+     */
+    public function onListOperationsDeleteButtonCallback(array $row, ?string $href, string $label, string $title, ?string $icon, string $attributes,): string
+    {
+        if (!$this->security->isGranted(PrivacyProtocolPermissions::USER_CAN_DELETE_ARCHIVES)) {
+            return '';
+        }
+
+        return sprintf(
+            '<a href="%s" title="%s"%s>%s</a> ',
+            Backend::addToUrl($href . '&amp;id=' . $row['id']),
+            StringUtil::specialchars($title),
+            $attributes,
+            Image::getHtml($icon, $label)
+        );
     }
 
     protected function checkPermissions(): void
