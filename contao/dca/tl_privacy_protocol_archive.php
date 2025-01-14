@@ -75,7 +75,7 @@ $GLOBALS['TL_DCA']['tl_privacy_protocol_archive'] = [
             'addReferenceEntity',
             'addEntryTypeToReferenceFieldOnChange',
         ],
-        'default' => '{general_legend},title;{config_legend},personalFieldsExplanation,personalFields,titlePattern,skipIpAnonymization,addCodeProtocol,addReferenceEntity;',
+        'default' => '{general_legend},title;{config_legend},titlePattern,skipCodeProtocol,skipIpAnonymization;',
     ],
     'subpalettes' => [
         'addCodeProtocol' => 'codeFields',
@@ -105,20 +105,6 @@ $GLOBALS['TL_DCA']['tl_privacy_protocol_archive'] = [
             'eval' => ['mandatory' => true, 'tl_class' => 'w50'],
             'sql' => "varchar(255) NOT NULL default ''",
         ],
-        'personalFieldsExplanation' => [
-            'inputType' => 'explanation',
-            'eval' => [
-                'text' => &$GLOBALS['TL_LANG']['tl_privacy_protocol_archive']['personalFieldsExplanation'], // this is a string, not an array
-                'class' => 'tl_info',
-                'tl_class' => 'long',
-            ],
-        ],
-        'personalFields' => [
-            'exclude' => true,
-            'inputType' => 'checkbox',
-            'eval' => ['multiple' => true, 'tl_class' => 'w50 clr'],
-            'sql' => 'blob NULL',
-        ],
         'titlePattern' => [
             'exclude' => true,
             'inputType' => 'text',
@@ -127,6 +113,12 @@ $GLOBALS['TL_DCA']['tl_privacy_protocol_archive'] = [
         ],
         'skipIpAnonymization' => [
             'label' => &$GLOBALS['TL_LANG']['tl_privacy_protocol_archive']['skipIpAnonymization'],
+            'exclude' => true,
+            'inputType' => 'checkbox',
+            'eval' => ['tl_class' => 'w50'],
+            'sql' => "char(1) NOT NULL default ''",
+        ],
+        'skipCodeProtocol' => [
             'exclude' => true,
             'inputType' => 'checkbox',
             'eval' => ['tl_class' => 'w50'],

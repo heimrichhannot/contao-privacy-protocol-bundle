@@ -10,7 +10,14 @@ namespace HeimrichHannot\PrivacyProtocolBundle\Model;
 
 use Contao\Model;
 
-class ProtocolEntryModel extends Model
+/**
+ * @property int $id
+ * @property int $tstamp
+ * @property int $pid
+ * @property string $type
+ * @property int $dateAdded
+ */
+class PrivacyProtocolEntryModel extends Model
 {
     protected static $strTable = 'tl_privacy_protocol_entry';
 }

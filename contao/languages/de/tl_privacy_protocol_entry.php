@@ -79,20 +79,20 @@ $lang['codeStacktrace'][1] = 'In diesem Feld wird der Stacktrace zur aufrufenden
 /*
  * Reference
  */
-$lang['reference'] = [
-    \HeimrichHannot\PrivacyBundle\DataContainer\ProtocolEntryContainer::TYPE_FIRST_OPT_IN => 'Erstes Opt-In',
-    \HeimrichHannot\PrivacyBundle\DataContainer\ProtocolEntryContainer::TYPE_SECOND_OPT_IN => 'Zweites Opt-In',
-    \HeimrichHannot\PrivacyBundle\DataContainer\ProtocolEntryContainer::TYPE_FIRST_OPT_OUT => 'Erstes Opt-Out',
-    \HeimrichHannot\PrivacyBundle\DataContainer\ProtocolEntryContainer::TYPE_SECOND_OPT_OUT => 'Zweites Opt-Out',
-    \HeimrichHannot\PrivacyBundle\DataContainer\ProtocolEntryContainer::TYPE_OPT_IN => 'Opt-In',
-    \HeimrichHannot\PrivacyBundle\DataContainer\ProtocolEntryContainer::TYPE_OPT_OUT => 'Opt-Out',
-    \HeimrichHannot\PrivacyBundle\DataContainer\ProtocolEntryContainer::TYPE_CREATE => 'Datensatz erstellt',
-    \HeimrichHannot\PrivacyBundle\DataContainer\ProtocolEntryContainer::TYPE_UPDATE => 'Datensatz bearbeitet',
-    \HeimrichHannot\PrivacyBundle\DataContainer\ProtocolEntryContainer::TYPE_DELETE => 'Datensatz gelöscht',
-    \HeimrichHannot\PrivacyBundle\DataContainer\ProtocolEntryContainer::CMS_SCOPE_BACKEND => 'Backend',
-    \HeimrichHannot\PrivacyBundle\DataContainer\ProtocolEntryContainer::CMS_SCOPE_FRONTEND => 'Frontend',
-    \HeimrichHannot\PrivacyBundle\DataContainer\ProtocolEntryContainer::CMS_SCOPE_BOTH => 'Beide',
-];
+//$lang['reference'] = [
+//    \HeimrichHannot\PrivacyBundle\DataContainer\ProtocolEntryContainer::TYPE_FIRST_OPT_IN => 'Erstes Opt-In',
+//    \HeimrichHannot\PrivacyBundle\DataContainer\ProtocolEntryContainer::TYPE_SECOND_OPT_IN => 'Zweites Opt-In',
+//    \HeimrichHannot\PrivacyBundle\DataContainer\ProtocolEntryContainer::TYPE_FIRST_OPT_OUT => 'Erstes Opt-Out',
+//    \HeimrichHannot\PrivacyBundle\DataContainer\ProtocolEntryContainer::TYPE_SECOND_OPT_OUT => 'Zweites Opt-Out',
+//    \HeimrichHannot\PrivacyBundle\DataContainer\ProtocolEntryContainer::TYPE_OPT_IN => 'Opt-In',
+//    \HeimrichHannot\PrivacyBundle\DataContainer\ProtocolEntryContainer::TYPE_OPT_OUT => 'Opt-Out',
+//    \HeimrichHannot\PrivacyBundle\DataContainer\ProtocolEntryContainer::TYPE_CREATE => 'Datensatz erstellt',
+//    \HeimrichHannot\PrivacyBundle\DataContainer\ProtocolEntryContainer::TYPE_UPDATE => 'Datensatz bearbeitet',
+//    \HeimrichHannot\PrivacyBundle\DataContainer\ProtocolEntryContainer::TYPE_DELETE => 'Datensatz gelöscht',
+//    \HeimrichHannot\PrivacyBundle\DataContainer\ProtocolEntryContainer::CMS_SCOPE_BACKEND => 'Backend',
+//    \HeimrichHannot\PrivacyBundle\DataContainer\ProtocolEntryContainer::CMS_SCOPE_FRONTEND => 'Frontend',
+//    \HeimrichHannot\PrivacyBundle\DataContainer\ProtocolEntryContainer::CMS_SCOPE_BOTH => 'Beide',
+//];
 
 /*
  * Legends

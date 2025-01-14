@@ -10,7 +10,13 @@ namespace HeimrichHannot\PrivacyProtocolBundle\Model;
 
 use Contao\Model;
 
-class ProtocolArchiveModel extends Model
+/**
+ * @property int    $id
+ * @property string $title
+ * @property bool|string $skipCodeProtocol
+ * @property bool|string $skipIpAnonymization
+ */
+class PrivacyProtocolArchiveModel extends Model
 {
     protected static $strTable = 'tl_privacy_protocol_archive';
 }

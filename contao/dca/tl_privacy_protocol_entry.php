@@ -7,6 +7,11 @@
  */
 
 use Contao\DC_Table;
+use HeimrichHannot\UtilsBundle\Dca\DateAddedField;
+
+DateAddedField::register('tl_privacy_protocol_entry')
+    ->setFlag(8)
+    ->setSorting(true);
 
 $GLOBALS['TL_DCA']['tl_privacy_protocol_entry'] = [
     'config' => [
@@ -52,7 +57,10 @@ $GLOBALS['TL_DCA']['tl_privacy_protocol_entry'] = [
     ],
     'palettes' => [
         '__selector__' => [],
-        'default' => '{type_date_legend},type,dateAdded,authorType,author;'.'{user_legend},personalDataExplanation,ip,gender,academicTitle,firstname,lastname,email,member,user;'.'{interaction_legend},url,cmsScope,bundle,bundleVersion,dataContainer,description,module,moduleName,moduleType,element,elementType;'.'{code_legend},codeFile,codeLine,codeFunction,codeStacktrace;',
+        'default' => '{type_date_legend},type,dateAdded,authorType,author;'
+            .'{data_legend},data,ip,email;'
+            .'{user_legend},member,user;'
+            .'{interaction_legend},url,cmsScope,bundle,bundleVersion,dataContainer,description,module,moduleName,moduleType,element,elementType;'.'{code_legend},codeFile,codeLine,codeFunction,codeStacktrace;',
     ],
     'fields' => [
         'id' => [
@@ -231,6 +239,14 @@ $GLOBALS['TL_DCA']['tl_privacy_protocol_entry'] = [
             'eval' => ['tl_class' => 'long clr'],
             'sql' => 'text NULL',
         ],
+        'data' => [
+            'inputType' => 'textarea',
+            'eval' => ['readonly' => true],
+            'sql' => ['type' => 'blob', 'notnull' => false],
+        ],
+
+
+
         'additionalData' => [
             'label' => &$GLOBALS['TL_LANG']['tl_privacy_protocol_entry']['additionalData'],
             'exclude' => true,
@@ -244,10 +260,10 @@ $GLOBALS['TL_DCA']['tl_privacy_protocol_entry'] = [
             'exclude' => true,
             'filter' => true,
             'inputType' => 'select',
-            'options_callback' => ['tl_content', 'getModules'],
-            'wizard' => [
-                ['tl_content', 'editModule'],
-            ],
+//            'options_callback' => ['tl_content', 'getModules'],
+//            'wizard' => [
+//                ['tl_content', 'editModule'],
+//            ],
             'eval' => ['tl_class' => 'w50', 'includeBlankOption' => true, 'submitOnChange' => true],
             'sql' => "varchar(64) NOT NULL default ''",
         ],
@@ -272,10 +288,10 @@ $GLOBALS['TL_DCA']['tl_privacy_protocol_entry'] = [
             'exclude' => true,
             'filter' => true,
             'inputType' => 'select',
-            'options_callback' => ['tl_content', 'getAlias'],
-            'wizard' => [
-                ['tl_content', 'editAlias'],
-            ],
+//            'options_callback' => ['tl_content', 'getAlias'],
+//            'wizard' => [
+//                ['tl_content', 'editAlias'],
+//            ],
             'eval' => ['tl_class' => 'w50', 'includeBlankOption' => true, 'submitOnChange' => true],
             'sql' => "varchar(64) NOT NULL default ''",
         ],

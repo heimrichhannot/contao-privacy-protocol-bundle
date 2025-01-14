@@ -4,6 +4,9 @@
  * Backend modules
  */
 
+use HeimrichHannot\PrivacyProtocolBundle\Model\PrivacyProtocolArchiveModel;
+use HeimrichHannot\PrivacyProtocolBundle\Model\PrivacyProtocolEntryModel;
+
 $GLOBALS['BE_MOD']['privacy']['protocols'] = [
     'tables' => ['tl_privacy_protocol_archive', 'tl_privacy_protocol_entry'],
 ];
@@ -16,8 +19,8 @@ $GLOBALS['BE_MOD']['privacy']['protocols'] = [
 /**
  * Models
  */
-$GLOBALS['TL_MODELS']['tl_privacy_protocol_archive'] = 'HeimrichHannot\PrivacyBundle\Model\ProtocolArchiveModel';
-$GLOBALS['TL_MODELS']['tl_privacy_protocol_entry']   = 'HeimrichHannot\PrivacyBundle\Model\ProtocolEntryModel';
+$GLOBALS['TL_MODELS']['tl_privacy_protocol_archive'] = PrivacyProtocolArchiveModel::class;
+$GLOBALS['TL_MODELS']['tl_privacy_protocol_entry']   = PrivacyProtocolEntryModel::class;
 
 /**
  * Permissions
