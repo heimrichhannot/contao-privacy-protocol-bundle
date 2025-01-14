@@ -1,7 +1,7 @@
 <?php
 
 use Contao\CoreBundle\DataContainer\PaletteManipulator;
-use HeimrichHannot\PrivacyProtocolBundle\Security\Voter\PrivacyProtocolArchiveVoter;
+use HeimrichHannot\PrivacyProtocolBundle\Security\PrivacyProtocolPermissions;
 
 $dca = &$GLOBALS['TL_DCA']['tl_user'];
 
@@ -20,4 +20,4 @@ PaletteManipulator::create()
  * Fields
  */
 
-PrivacyProtocolArchiveVoter::addDcaFields($dca);
+PrivacyProtocolPermissions::addDcaFields($dca);

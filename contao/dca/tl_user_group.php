@@ -1,15 +1,20 @@
 <?php
 
-use HeimrichHannot\PrivacyProtocolBundle\Security\Voter\PrivacyProtocolArchiveVoter;
+use Contao\CoreBundle\DataContainer\PaletteManipulator;
+use HeimrichHannot\PrivacyProtocolBundle\Security\PrivacyProtocolPermissions;
 
 $dca = &$GLOBALS['TL_DCA']['tl_user_group'];
 
 /**
  * Palettes
  */
-$dca['palettes']['default'] = str_replace('fop;', 'fop;{privacy_legend},privacy_protocols,privacy_protocolp;', $dca['palettes']['default']);
+PaletteManipulator::create()
+    ->addLegend('privacy_legend', 'amg_legend')
+    ->addField(['privacy_protocols', 'privacy_legend'], 'privacy_legend', PaletteManipulator::POSITION_APPEND)
+    ->addField(['privacy_protocolp', 'privacy_legend'], 'privacy_legend', PaletteManipulator::POSITION_APPEND)
+    ->applyToPalette('default', 'tl_user_group');
 
 /**
  * Fields
  */
-PrivacyProtocolArchiveVoter::addDcaFields($dca);
+PrivacyProtocolPermissions::addDcaFields($dca);
