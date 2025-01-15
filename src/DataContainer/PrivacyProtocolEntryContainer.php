@@ -2,23 +2,29 @@
 
 namespace HeimrichHannot\PrivacyProtocolBundle\DataContainer;
 
+use Contao\BackendUser;
 use Contao\CoreBundle\DataContainer\PaletteManipulator;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsCallback;
+use Contao\CoreBundle\Exception\AccessDeniedException;
 use Contao\CoreBundle\ServiceAnnotation\Callback;
 use Contao\CoreBundle\String\SimpleTokenParser;
+use Contao\Database;
 use Contao\DataContainer;
 use Contao\Date;
+use Contao\Input;
 use HeimrichHannot\PrivacyProtocolBundle\Model\PrivacyProtocolArchiveModel;
 use HeimrichHannot\PrivacyProtocolBundle\Model\PrivacyProtocolEntryModel;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class PrivacyProtocolEntryContainer
 {
     public function __construct(
-        private readonly RequestStack $requestStack,
-        private readonly SimpleTokenParser $parser,
+        private readonly RequestStack        $requestStack,
+        private readonly SimpleTokenParser   $parser,
         private readonly TranslatorInterface $translator,
+        private readonly Security            $security,
     )
     {
     }
@@ -26,6 +32,8 @@ class PrivacyProtocolEntryContainer
     #[AsCallback(table: 'tl_privacy_protocol_entry', target: 'config.onload')]
     public function onConfigLoadCallback(?DataContainer $dc = null): void
     {
+        $this->checkPermission();
+
         if (null === $dc || !$dc->id || 'edit' !== $this->requestStack->getCurrentRequest()->query->get('act')) {
             return;
         }
@@ -68,7 +76,7 @@ class PrivacyProtocolEntryContainer
             $protocolEntry->row()
         );
         $data['pid'] = $protocolArchive->title;
-        $data['type'] = $this->translator->trans('tl_privacy_protocol_entry.reference.'.$protocolEntry->type, [], 'contao_tl_privacy_protocol_entry');
+        $data['type'] = $this->translator->trans('tl_privacy_protocol_entry.reference.' . $protocolEntry->type, [], 'contao_tl_privacy_protocol_entry');
 
         $title = $this->parser->parse($titlePattern, $data);
 
@@ -76,5 +84,116 @@ class PrivacyProtocolEntryContainer
                 Date::getNumericDatimFormat(),
                 trim($row['dateAdded'])
             ) . ']</span></div>';
+    }
+
+    private function checkPermission(): void
+    {
+        if ($this->security->isGranted('ROLE_ADMIN')) {
+            return;
+        }
+
+        /** @var BackendUser $user */
+        $user = $this->security->getUser();
+        $database = Database::getInstance();
+
+        // Set the root IDs
+        if (!\is_array($user->privacy_protocols) || empty($user->privacy_protocols)) {
+            $root = [0];
+        } else {
+            $root = $user->privacy_protocols;
+        }
+
+        $id = ($this->requestStack->getCurrentRequest()?->query->get('id') ?? CURRENT_ID);
+
+        // Check current action
+        switch (Input::get('act')) {
+            case 'paste':
+            case 'select':
+                // Check CURRENT_ID here (see #247)
+                if (!in_array(CURRENT_ID, $root)) {
+                    throw new AccessDeniedException('Not enough permissions to access private protocol ID ' . $id . '.');
+                }
+                break;
+
+            case 'create':
+                if (!\strlen(Input::get('pid')) || !\in_array(Input::get('pid'), $root)) {
+                    throw new AccessDeniedException('Not enough permissions to create private protocol items in private protocol archive ID ' . Input::get('pid') . '.');
+                }
+
+                break;
+
+            case 'cut':
+//            case 'copy':
+                if (Input::get('act') == 'cut' && Input::get('mode') == 1) {
+                    $objArchive = $database->prepare("SELECT pid FROM tl_privacy_protocol_entry WHERE id=?")
+                        ->limit(1)
+                        ->execute(Input::get('pid'));
+
+                    if ($objArchive->numRows < 1) {
+                        throw new AccessDeniedException('Invalid news item ID ' . Input::get('pid') . '.');
+                    }
+
+                    $pid = $objArchive->pid;
+                } else {
+                    $pid = Input::get('pid');
+                }
+
+
+                if (!\in_array($pid, $root)) {
+                    throw new AccessDeniedException('Not enough permissions to ' . Input::get('act') . ' private protocol item ID ' . $id . ' to private protocol archive ID ' . Input::get('pid') . '.');
+                }
+            // no break STATEMENT HERE
+
+            case 'edit':
+            case 'show':
+            case 'delete':
+                $objArchive = $database->prepare('SELECT pid FROM tl_privacy_protocol_entry WHERE id=?')
+                    ->limit(1)
+                    ->execute($id);
+
+                if ($objArchive->numRows < 1) {
+                    throw new AccessDeniedException('Invalid private protocol item ID ' . $id . '.');
+                }
+
+                if (!\in_array($objArchive->pid, $root)) {
+                    throw new AccessDeniedException('Not enough permissions to ' . Input::get('act') . ' private protocol item ID ' . $id . ' of private protocol archive ID ' . $objArchive->pid . '.');
+                }
+
+                break;
+
+            case 'editAll':
+            case 'deleteAll':
+            case 'overrideAll':
+            case 'cutAll':
+//            case 'copyAll':
+                if (!\in_array($id, $root)) {
+                    throw new AccessDeniedException('Not enough permissions to access private protocol archive ID ' . $id . '.');
+                }
+
+                $objArchive = $database->prepare('SELECT id FROM tl_privacy_protocol_entry WHERE pid=?')
+                    ->execute($id);
+
+                if ($objArchive->numRows < 1) {
+                    throw new AccessDeniedException('Invalid private protocol archive ID ' . $id . '.');
+                }
+
+                $session = $this->requestStack->getSession();
+                $sessionData = $session->all();
+                $sessionData['CURRENT']['IDS'] = array_intersect(
+                    $session['CURRENT']['IDS'] ?? [],
+                    $objArchive->fetchEach('id')
+                );
+                $session->replace($sessionData);
+                break;
+
+            default:
+                if (Input::get('act')) {
+                    throw new AccessDeniedException('Invalid command "' . Input::get('act') . '".');
+                } elseif (!\in_array($id, $root)) {
+                    throw new AccessDeniedException('Not enough permissions to access private protocol archive ID ' . $id . '.');
+                }
+
+                break;
+        }
     }
 }
