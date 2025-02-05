@@ -3,13 +3,16 @@
 namespace HeimrichHannot\PrivacyProtocolBundle\Protocol;
 
 use Composer\InstalledVersions;
+use Contao\BackendUser;
 use Contao\ContentModel;
 use Contao\CoreBundle\Routing\ScopeMatcher;
+use Contao\FrontendUser;
 use Contao\ModuleModel;
 use Contao\System;
 use HeimrichHannot\PrivacyProtocolBundle\Model\PrivacyProtocolArchiveModel;
 use HeimrichHannot\PrivacyProtocolBundle\Model\PrivacyProtocolEntryModel;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Security\Core\Security;
 
 class PrivacyProtocolLogger
 {
@@ -18,6 +21,7 @@ class PrivacyProtocolLogger
     public function __construct(
         private readonly RequestStack $requestStack,
         private readonly ScopeMatcher $scopeMatcher,
+        private readonly Security $security,
     )
     {
     }
@@ -38,7 +42,9 @@ class PrivacyProtocolLogger
         $protocolEntry->tstamp = $protocolEntry->dateAdded = time();
         $protocolEntry->pid = $archive->id;
         $protocolEntry->type = $entry->type->value;
-        $protocolEntry->data = json_encode($entry->data, JSON_THROW_ON_ERROR);
+        $protocolEntry->data = json_encode($entry->data, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT);
+        $protocolEntry->email = $entry->email;
+        $protocolEntry->description = $entry->description;
 
         $this->code($protocolEntry, $entry, $archive);
 
@@ -54,7 +60,7 @@ class PrivacyProtocolLogger
         if ($entry->scope) {
             $protocolEntry->cmsScope = $entry->scope->value;
         } elseif ($this->requestStack->getCurrentRequest()) {
-            $protocolEntry->cmsScope = $this->scopeMatcher->isBackendRequest($this->requestStack->getCurrentRequest()) ? ProtocolCmsScope::BACKEND : ProtocolCmsScope::FRONTEND;
+            $protocolEntry->cmsScope = $this->scopeMatcher->isBackendRequest($this->requestStack->getCurrentRequest()) ? ProtocolCmsScope::BACKEND->value : ProtocolCmsScope::FRONTEND->value;
         }
 
         if ($entry->url) {
@@ -72,9 +78,15 @@ class PrivacyProtocolLogger
 
         $protocolEntry->dataContainer = $entry->dataContainer;
 
-        $protocolEntry->module = $entry->module instanceof ModuleModel ? $entry->module->id : $entry->module;
-        $protocolEntry->contentElement = $entry->contentElement instanceof ContentModel ? $entry->contentElement->id : $entry->contentElement;
+        $protocolEntry->module = (int) ($entry->module instanceof ModuleModel ? $entry->module->id : $entry->module);
+        $protocolEntry->contentElement = (int) ($entry->contentElement instanceof ContentModel ? $entry->contentElement->id : $entry->contentElement);
 
+        $user = $this->security->getUser();
+        if ($user instanceof FrontendUser) {
+            $protocolEntry->member = $user->id;
+        } elseif ($user instanceof BackendUser) {
+            $protocolEntry->user = $user->id;
+        }
 
         $protocolEntry->save();
     }
@@ -106,7 +118,7 @@ class PrivacyProtocolLogger
                 $classMethods = get_class_methods(self::class);
 
                 foreach ($stackTrace as $index => $entry) {
-                    if (!str_ends_with($entry['file'], 'ProtocolHelper.php') || !\in_array($entry['function'], $classMethods)) {
+                    if (!str_ends_with($entry['file'], 'PrivacyProtocolLogger.php') || !\in_array($entry['function'], $classMethods)) {
                         $relevantStackEntry = $entry;
 
                         if (isset($stackTrace[$index + 1]['function'])) {

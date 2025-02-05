@@ -14,6 +14,7 @@ use Contao\Date;
 use Contao\Input;
 use HeimrichHannot\PrivacyProtocolBundle\Model\PrivacyProtocolArchiveModel;
 use HeimrichHannot\PrivacyProtocolBundle\Model\PrivacyProtocolEntryModel;
+use HeimrichHannot\UtilsBundle\Util\Utils;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -25,6 +26,7 @@ class PrivacyProtocolEntryContainer
         private readonly SimpleTokenParser   $parser,
         private readonly TranslatorInterface $translator,
         private readonly Security            $security,
+        private readonly Utils               $utils,
     )
     {
     }
@@ -37,6 +39,11 @@ class PrivacyProtocolEntryContainer
         if (null === $dc || !$dc->id || 'edit' !== $this->requestStack->getCurrentRequest()->query->get('act')) {
             return;
         }
+
+        $GLOBALS['TL_DCA']['tl_privacy_protocol_entry']['fields']['dateAdded']['inputType'] = 'text';
+        $GLOBALS['TL_DCA']['tl_privacy_protocol_entry']['fields']['dateAdded']['eval']['tl_class'] = 'w50';
+        $GLOBALS['TL_DCA']['tl_privacy_protocol_entry']['fields']['dateAdded']['eval']['rgxp'] = 'datim';
+        $GLOBALS['TL_DCA']['tl_privacy_protocol_entry']['fields']['dateAdded']['eval']['datepicker'] = true;
 
         $protocolEntry = PrivacyProtocolEntryModel::findByPk($dc->id);
 
@@ -73,7 +80,7 @@ class PrivacyProtocolEntryContainer
 
         $data = array_merge(
             json_decode($protocolEntry->data, true) ?? [],
-            $protocolEntry->row()
+            array_filter($protocolEntry->row())
         );
         $data['pid'] = $protocolArchive->title;
         $data['type'] = $this->translator->trans('tl_privacy_protocol_entry.reference.' . $protocolEntry->type, [], 'contao_tl_privacy_protocol_entry');
@@ -84,6 +91,12 @@ class PrivacyProtocolEntryContainer
                 Date::getNumericDatimFormat(),
                 trim($row['dateAdded'])
             ) . ']</span></div>';
+    }
+
+    #[AsCallback(table: 'tl_privacy_protocol_entry', target: 'fields.dataContainer.options')]
+    public function onFieldsDataContainerCallback(?DataContainer $dc = null): array
+    {
+        return Database::getInstance()->listTables();
     }
 
     private function checkPermission(): void

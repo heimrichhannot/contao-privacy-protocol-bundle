@@ -26,6 +26,8 @@ use Contao\Model;
  * @property string $dataContainer
  * @property int $module
  * @property int $contentElement
+ * @property string $email
+ * @property string $description
  *
  */
 class PrivacyProtocolEntryModel extends Model

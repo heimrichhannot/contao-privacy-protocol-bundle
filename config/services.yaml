@@ -6,6 +6,6 @@ services:
     autoconfigure: true
     public: false
 
-  HeimrichHannot\PrivacyProtocolBundle\ProtocolPrivacyProtocolLogger:
+  HeimrichHannot\PrivacyProtocolBundle\Protocol\PrivacyProtocolLogger:
     autowire: true
     public: true

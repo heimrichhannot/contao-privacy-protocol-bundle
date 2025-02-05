@@ -98,11 +98,13 @@ $GLOBALS['TL_DCA']['tl_privacy_protocol_archive'] = [
         'titlePattern' => [
             'exclude' => true,
             'inputType' => 'text',
+            'default' => '##type## - ##email## {if description != ""}(##description##){endif}',
             'eval' => [
                 'maxlength' => 128,
                 'tl_class' => 'w50',
                 'mandatory' => true,
                 'decodeEntities' => true,
+
                 ],
             'sql' => "varchar(128) NOT NULL default ''",
         ],
