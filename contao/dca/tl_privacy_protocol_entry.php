@@ -67,13 +67,8 @@ $GLOBALS['TL_DCA']['tl_privacy_protocol_entry'] = [
         '__selector__' => [],
         'default' =>
             '{interaction_legend},type,person,target,dateAdded,description;'.
-            '{context_legend},author,url,cmsScope,bundle,bundleVersion,ip,module,element;'.
+            '{context_legend},author,url,cmsScope,bundle,bundleVersion,ip;'.
             '{code_legend},codeStacktrace;',
-
-//        'default' => '{type_date_legend},type,dateAdded,author;'
-//            .'{data_legend},data,ip,email;'
-//            .'{user_legend},member,user;'
-//            .'{interaction_legend},url,cmsScope,bundle,bundleVersion,dataContainer,description,module,moduleName,moduleType,element,elementType;'.'{code_legend},codeFile,codeLine,codeFunction,codeStacktrace;',
     ],
     'fields' => [
         'id' => [
@@ -173,28 +168,6 @@ $GLOBALS['TL_DCA']['tl_privacy_protocol_entry'] = [
             'inputType' => 'textarea',
             'eval' => ['tl_class' => 'long clr'],
             'sql' => 'text NULL',
-        ],
-        'module' => [
-            'exclude' => true,
-            'inputType' => 'picker',
-            'relation'   => [
-                'type' => 'belongsTo',
-                'load' => 'lazy',
-                'table' => 'tl_content',
-            ],
-            'eval' => ['tl_class' => 'w50', 'includeBlankOption' => true, 'submitOnChange' => true],
-            'sql' => "int(10) unsigned NOT NULL default '0'",
-        ],
-        'element' => [
-            'exclude' => true,
-            'inputType' => 'picker',
-            'relation'   => [
-                'type' => 'belongsTo',
-                'load' => 'lazy',
-                'table' => 'tl_content',
-            ],
-            'eval' => ['tl_class' => 'w50', 'includeBlankOption' => true, 'submitOnChange' => true],
-            'sql' => "int(10) unsigned NOT NULL default '0'",
         ],
         'codeStacktrace' => [
             'exclude' => true,

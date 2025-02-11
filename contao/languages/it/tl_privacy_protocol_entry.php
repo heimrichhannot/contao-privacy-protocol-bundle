@@ -50,16 +50,6 @@ $lang['bundleVersion'][0] = 'Versione pacchetto';
 $lang['bundleVersion'][1] = 'In questo campo viene registrata la versione del pacchetto.';
 $lang['description'][0] = 'Descrizione';
 $lang['description'][1] = 'In questo campo viene registrata una descrizione.';
-$lang['module'][0] = 'Modulo';
-$lang['module'][1] = 'In questo campo viene registrato l\'ID del modulo.';
-$lang['moduleName'][0] = 'Nome del modulo';
-$lang['moduleName'][1] = 'In questo campo viene registrato il nome del modulo.';
-$lang['moduleType'][0] = 'Tipo del modulo';
-$lang['moduleType'][1] = 'In questo campo viene registrato il tipo del modulo.';
-$lang['element'][0] = 'Elemento di contenuto';
-$lang['element'][1] = 'In questo campo viene registrato l\'ID dell\'elemento di contenuto.';
-$lang['elementType'][0] = 'Tipo dell\'elemento di contenuto';
-$lang['elementType'][1] = 'In questo campo viene registrato il tipo dell\'elemento di contenuto.';
 
 // code
 $lang['codeFile'][0] = 'File';

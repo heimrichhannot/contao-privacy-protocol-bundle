@@ -74,8 +74,6 @@ class PrivacyProtocolLogger
         } elseif ($entry->packageName) {
             $protocolEntry->bundleVersion = InstalledVersions::getVersion($entry->packageName);
         }
-        $protocolEntry->module = (int) ($entry->module instanceof ModuleModel ? $entry->module->id : $entry->module);
-        $protocolEntry->contentElement = (int) ($entry->contentElement instanceof ContentModel ? $entry->contentElement->id : $entry->contentElement);
 
         $protocolEntry->save();
     }

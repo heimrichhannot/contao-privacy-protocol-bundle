@@ -40,10 +40,6 @@ $lang['bundle'][0] = 'Bundle';
 $lang['bundle'][1] = 'In diesem Feld wird gespeichert, in welchem Bundle die Interaktion stattgefunden hat.';
 $lang['bundleVersion'][0] = 'Bundle-Version';
 $lang['bundleVersion'][1] = 'In diesem Feld wird die Version des Bundles gespeichert.';
-$lang['module'][0] = 'Modul';
-$lang['module'][1] = 'In diesem Feld wird die ID des Moduls gespeichert.';
-$lang['element'][0] = 'Inhaltselement';
-$lang['element'][1] = 'In diesem Feld wird die ID des Inhaltselements gespeichert.';
 
 // code
 $lang['codeStacktrace'][0] = 'Stacktrace';

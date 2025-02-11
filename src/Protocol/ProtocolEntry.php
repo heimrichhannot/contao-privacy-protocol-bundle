@@ -18,8 +18,6 @@ class ProtocolEntry
     public ?string $codeFunction = null;
     public ?string $codeStacktrace = null;
     public UserModel|null $author = null;
-    public ContentModel|int|null $contentElement = null;
-    public ModuleModel|int|null $module = null;
 
     public function __construct(
         public array        $person,
