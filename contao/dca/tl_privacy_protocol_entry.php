@@ -39,7 +39,7 @@ $GLOBALS['TL_DCA']['tl_privacy_protocol_entry'] = [
         'sorting' => [
             'mode' => 4,
             'fields' => ['dateAdded DESC'],
-            'headerFields' => ['title', 'addCodeProtocol'],
+            'headerFields' => ['title', 'addCodeProtocol','skipIpAnonymization'],
             'panelLayout' => 'filter;sort,search,limit',
         ],
         'global_operations' => [
@@ -102,12 +102,6 @@ $GLOBALS['TL_DCA']['tl_privacy_protocol_entry'] = [
             ],
             'sql' => ['type' => 'blob', 'notnull' => false],
         ],
-
-
-
-
-
-
         'ip' => [
             'label' => &$GLOBALS['TL_LANG']['tl_privacy_protocol_entry']['ip'],
             'exclude' => true,
