@@ -1,7 +1,7 @@
 services:
 
   HeimrichHannot\PrivacyProtocolBundle\:
-    resource: '../src/{DataContainer}/*'
+    resource: '../src/{DataContainer,EventListener}/*'
     autowire: true
     autoconfigure: true
     public: false

@@ -11,6 +11,9 @@ GDPR, in German: "Datenschutz-Grundverordnung", DSGVO).
 > consulting. We strongly encourage you to consult a lawyer if you have any questions or concerns.
 
 
+
+
+
 # OLD README - Contao Privacy Bundle
 
 This bundle contains functionality concerning privacy and the European Union's "General Data Protection Regulation" (

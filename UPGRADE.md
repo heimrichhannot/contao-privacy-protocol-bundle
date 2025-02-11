@@ -2,6 +2,12 @@
 
 ## From contao-privacy-bundle
 
+This is a major refactoring of the privacy bundle. The following changes are made:
+- removed privacy form module
+- removed reference types
+- changed the way how adding entries from code
+- changed the data collected
+
 ### Maildrum
 
 #### Mailding lists
