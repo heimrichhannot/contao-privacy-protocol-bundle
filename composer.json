@@ -1,7 +1,7 @@
 {
   "name": "heimrichhannot/contao-privacy-protocol-bundle",
   "type": "contao-bundle",
-  "description": "This bundle contains functionality concerning privacy and the European Union's \"General Data Protection Regulation\" (GDPR).",
+  "description": "This bundle add a privacy logging entity to contao as required by the General Data Protection Regulation.",
   "license": "LGPL-3.0-or-later",
   "require": {
     "php": "^8.1",
