@@ -11,8 +11,10 @@ namespace HeimrichHannot\PrivacyProtocolBundle\Model;
 use Contao\Model;
 
 /**
- * @property int    $id
+ * @property int $id
+ * @property int $tstamp
  * @property string $title
+ * @property string $titlePattern
  * @property bool|string $addCodeProtocol
  * @property bool|string $skipIpAnonymization
  */
