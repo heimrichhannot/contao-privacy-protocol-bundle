@@ -51,8 +51,8 @@ $GLOBALS['TL_DCA']['tl_privacy_protocol_archive'] = [
             'delete' => [
                 'href' => 'act=delete',
                 'icon' => 'delete.svg',
-                'attributes' => 'onclick="if(!confirm(\''.($GLOBALS['TL_LANG']['MSC']['deleteConfirm'] ?? null)
-                    .'\'))return false;Backend.getScrollOffset()"',
+                'attributes' => 'onclick="if(!confirm(\'' . ($GLOBALS['TL_LANG']['MSC']['deleteConfirm'] ?? null)
+                    . '\'))return false;Backend.getScrollOffset()"',
             ],
             'show' => [
                 'href' => 'act=show',
@@ -76,7 +76,10 @@ $GLOBALS['TL_DCA']['tl_privacy_protocol_archive'] = [
             'sorting' => true,
             'flag' => 1,
             'inputType' => 'text',
-            'eval' => ['mandatory' => true, 'tl_class' => 'w50'],
+            'eval' => [
+                'mandatory' => true,
+                'tl_class' => 'w50',
+            ],
             'sql' => "varchar(255) NOT NULL default ''",
         ],
         'titlePattern' => [
@@ -88,20 +91,23 @@ $GLOBALS['TL_DCA']['tl_privacy_protocol_archive'] = [
                 'tl_class' => 'w100',
                 'mandatory' => true,
                 'decodeEntities' => true,
-
-                ],
+            ],
             'sql' => "varchar(128) NOT NULL default ''",
         ],
         'skipIpAnonymization' => [
             'exclude' => true,
             'inputType' => 'checkbox',
-            'eval' => ['tl_class' => 'w50'],
+            'eval' => [
+                'tl_class' => 'w50',
+            ],
             'sql' => "char(1) NOT NULL default ''",
         ],
         'addCodeProtocol' => [
             'exclude' => true,
             'inputType' => 'checkbox',
-            'eval' => ['tl_class' => 'w50 clr'],
+            'eval' => [
+                'tl_class' => 'w50 clr',
+            ],
             'sql' => "char(1) NOT NULL default ''",
         ],
     ],

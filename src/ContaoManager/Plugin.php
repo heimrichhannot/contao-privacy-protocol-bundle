@@ -12,14 +12,13 @@ use Symfony\Component\Config\Loader\LoaderInterface;
 
 class Plugin implements BundlePluginInterface, ConfigPluginInterface
 {
-
     public function getBundles(ParserInterface $parser): array
     {
         return [
             BundleConfig::create(HeimrichHannotPrivacyProtocolBundle::class)
-            ->setLoadAfter([
-                ContaoCoreBundle::class,
-            ])
+                ->setLoadAfter([
+                    ContaoCoreBundle::class,
+                ]),
         ];
     }
 

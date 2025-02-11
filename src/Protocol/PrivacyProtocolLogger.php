@@ -16,10 +16,8 @@ class PrivacyProtocolLogger
     public function __construct(
         private readonly RequestStack $requestStack,
         private readonly ScopeMatcher $scopeMatcher,
-    )
-    {
+    ) {
     }
-
 
     /**
      * @throws \JsonException
@@ -81,13 +79,11 @@ class PrivacyProtocolLogger
         $this->stackTrace = null;
 
         $model->codeStacktrace =
-            /** @phpstan-ignore nullCoalesce.expr */
+            /* @phpstan-ignore nullCoalesce.expr */
             ($entry->codeFile ?? $this->getRelevantStackTrace()['file'] ?? '') . ':'
             . ($entry->codeFunction ?? $this->getRelevantStackTrace()['function'] ?? '')
             . '(' . ($entry->codeLine ?? $this->getRelevantStackTrace()['line'] ?? '') . ")\n"
             . $entry->codeStacktrace ?? (new \Exception())->getTraceAsString();
-
-
     }
 
     private function getRelevantStackTrace(): array

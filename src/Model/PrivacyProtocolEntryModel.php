@@ -11,10 +11,10 @@ namespace HeimrichHannot\PrivacyProtocolBundle\Model;
 use Contao\Model;
 
 /**
- * @property int $id
- * @property int $tstamp
- * @property int $pid
- * @property int $dateAdded
+ * @property int    $id
+ * @property int    $tstamp
+ * @property int    $pid
+ * @property int    $dateAdded
  * @property string $type
  * @property string $person
  * @property string $target
@@ -25,7 +25,6 @@ use Contao\Model;
  * @property string $url
  * @property string $bundle
  * @property string $bundleVersion
- *
  */
 class PrivacyProtocolEntryModel extends Model
 {

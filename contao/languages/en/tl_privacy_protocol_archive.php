@@ -2,7 +2,7 @@
 
 $lang = &$GLOBALS['TL_LANG']['tl_privacy_protocol_archive'];
 
-/**
+/*
  * Fields
  */
 $lang['title'] = ['Title', 'Please enter a title.'];
@@ -14,13 +14,13 @@ $lang['skipIpAnonymization'][1] = 'Select this option if you do not want to anon
 $lang['addCodeProtocol'][0] = 'Capture source code-related data';
 $lang['addCodeProtocol'][1] = 'Select this option to capture source code-related data.';
 
-/**
+/*
  * Legends
  */
 $lang['general_legend'] = 'General settings';
 $lang['config_legend'] = 'Configuration';
 
-/**
+/*
  * Buttons
  */
 $lang['new'] = ['New Protokollarchiv', 'Protokollarchiv create'];

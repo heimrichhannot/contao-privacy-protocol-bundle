@@ -16,22 +16,26 @@ class PrivacyProtocolPermissions
         };
 
         $dca['fields']['privacy_protocols'] = [
-            'label'      => &$GLOBALS['TL_LANG']['tl_user']['privacy_protocols'],
-            'exclude'    => true,
-            'inputType'  => 'checkbox',
+            'label' => &$GLOBALS['TL_LANG']['tl_user']['privacy_protocols'],
+            'exclude' => true,
+            'inputType' => 'checkbox',
             'foreignKey' => 'tl_privacy_protocol_archive.title',
-            'eval'       => ['multiple' => true],
-            'sql'        => "blob NULL"
+            'eval' => [
+                'multiple' => true,
+            ],
+            'sql' => 'blob NULL',
         ];
 
         $dca['fields']['privacy_protocolp'] = [
-            'label'     => &$GLOBALS['TL_LANG']['tl_user']['privacy_protocolp'],
-            'exclude'   => true,
+            'label' => &$GLOBALS['TL_LANG']['tl_user']['privacy_protocolp'],
+            'exclude' => true,
             'inputType' => 'checkbox',
-            'options'   => ['create', 'delete'],
+            'options' => ['create', 'delete'],
             'reference' => &$GLOBALS['TL_LANG']['MSC'],
-            'eval'      => ['multiple' => true],
-            'sql'       => "blob NULL"
+            'eval' => [
+                'multiple' => true,
+            ],
+            'sql' => 'blob NULL',
         ];
     }
 }

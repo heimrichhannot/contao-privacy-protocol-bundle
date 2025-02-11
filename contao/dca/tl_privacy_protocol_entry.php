@@ -39,7 +39,7 @@ $GLOBALS['TL_DCA']['tl_privacy_protocol_entry'] = [
         'sorting' => [
             'mode' => 4,
             'fields' => ['dateAdded DESC'],
-            'headerFields' => ['title', 'addCodeProtocol','skipIpAnonymization'],
+            'headerFields' => ['title', 'addCodeProtocol', 'skipIpAnonymization'],
             'panelLayout' => 'filter;sort,search,limit',
         ],
         'global_operations' => [
@@ -65,9 +65,8 @@ $GLOBALS['TL_DCA']['tl_privacy_protocol_entry'] = [
     ],
     'palettes' => [
         '__selector__' => [],
-        'default' =>
-            '{interaction_legend},type,person,target,dateAdded,description;'.
-            '{context_legend},author,url,cmsScope,bundle,bundleVersion,ip;'.
+        'default' => '{interaction_legend},type,person,target,dateAdded,description;' .
+            '{context_legend},author,url,cmsScope,bundle,bundleVersion,ip;' .
             '{code_legend},codeStacktrace;',
     ],
     'fields' => [
@@ -77,11 +76,16 @@ $GLOBALS['TL_DCA']['tl_privacy_protocol_entry'] = [
         'pid' => [
             'foreignKey' => 'tl_privacy_protocol_archive.title',
             'sql' => "int(10) unsigned NOT NULL default '0'",
-            'relation' => ['type' => 'belongsTo', 'load' => 'eager'],
+            'relation' => [
+                'type' => 'belongsTo',
+                'load' => 'eager',
+            ],
         ],
         'tstamp' => [
             'label' => &$GLOBALS['TL_LANG']['tl_privacy_protocol_entry']['tstamp'],
-            'eval' => ['rgxp' => 'datim'],
+            'eval' => [
+                'rgxp' => 'datim',
+            ],
             'sql' => "int(10) unsigned NOT NULL default '0'",
         ],
         'person' => [
@@ -91,7 +95,10 @@ $GLOBALS['TL_DCA']['tl_privacy_protocol_entry'] = [
                 'decodeEntities' => true,
                 'tl_class' => 'clr',
             ],
-            'sql' => ['type' => 'blob', 'notnull' => false],
+            'sql' => [
+                'type' => 'blob',
+                'notnull' => false,
+            ],
         ],
         'target' => [
             'inputType' => 'textarea',
@@ -100,14 +107,21 @@ $GLOBALS['TL_DCA']['tl_privacy_protocol_entry'] = [
                 'decodeEntities' => true,
                 'tl_class' => 'clr',
             ],
-            'sql' => ['type' => 'blob', 'notnull' => false],
+            'sql' => [
+                'type' => 'blob',
+                'notnull' => false,
+            ],
         ],
         'ip' => [
             'label' => &$GLOBALS['TL_LANG']['tl_privacy_protocol_entry']['ip'],
             'exclude' => true,
             'search' => true,
             'inputType' => 'text',
-            'eval' => ['maxlength' => 64, 'tl_class' => 'w50', 'personalField' => true],
+            'eval' => [
+                'maxlength' => 64,
+                'tl_class' => 'w50',
+                'personalField' => true,
+            ],
             'sql' => "varchar(64) NOT NULL default ''",
         ],
         // interaction
@@ -116,16 +130,23 @@ $GLOBALS['TL_DCA']['tl_privacy_protocol_entry'] = [
             'exclude' => true,
             'search' => true,
             'inputType' => 'text',
-            'eval' => ['tl_class' => 'w50'],
+            'eval' => [
+                'tl_class' => 'w50',
+            ],
             'sql' => 'text NULL',
         ],
         'cmsScope' => [
             'exclude' => true,
             'filter' => true,
             'inputType' => 'select',
-            'options_callback' => static fn() => ProtocolCmsScope::values(),
+            'options_callback' => static fn () => ProtocolCmsScope::values(),
             'reference' => &$GLOBALS['TL_LANG']['tl_privacy_protocol_entry']['reference'],
-            'eval' => ['tl_class' => 'w50', 'mandatory' => true, 'submitOnChange' => true, 'includeBlankOption' => true],
+            'eval' => [
+                'tl_class' => 'w50',
+                'mandatory' => true,
+                'submitOnChange' => true,
+                'includeBlankOption' => true,
+            ],
             'sql' => "varchar(16) NOT NULL default ''",
         ],
         'bundle' => [
@@ -133,44 +154,62 @@ $GLOBALS['TL_DCA']['tl_privacy_protocol_entry'] = [
             'exclude' => true,
             'filter' => true,
             'inputType' => 'text',
-            'eval' => ['maxlength' => 64, 'tl_class' => 'w50'],
+            'eval' => [
+                'maxlength' => 64,
+                'tl_class' => 'w50',
+            ],
             'sql' => "varchar(64) NOT NULL default ''",
         ],
         'bundleVersion' => [
             'label' => &$GLOBALS['TL_LANG']['tl_privacy_protocol_entry']['bundleVersion'],
             'exclude' => true,
             'inputType' => 'text',
-            'eval' => ['maxlength' => 64, 'tl_class' => 'w50'],
+            'eval' => [
+                'maxlength' => 64,
+                'tl_class' => 'w50',
+            ],
             'sql' => "varchar(64) NOT NULL default ''",
         ],
         'type' => [
             'exclude' => true,
             'filter' => true,
             'inputType' => 'select',
-            'options_callback' => static fn() => ProtocolType::values(),
+            'options_callback' => static fn () => ProtocolType::values(),
             'reference' => &$GLOBALS['TL_LANG']['tl_privacy_protocol_entry']['reference'],
-            'eval' => ['tl_class' => 'w50', 'mandatory' => true, 'includeBlankOption' => true, 'chosen' => true],
+            'eval' => [
+                'tl_class' => 'w50',
+                'mandatory' => true,
+                'includeBlankOption' => true,
+                'chosen' => true,
+            ],
             'sql' => "varchar(32) NOT NULL default ''",
         ],
         'description' => [
             'exclude' => true,
             'search' => true,
             'inputType' => 'textarea',
-            'eval' => ['tl_class' => 'long clr'],
+            'eval' => [
+                'tl_class' => 'long clr',
+            ],
             'sql' => 'text NULL',
         ],
         'codeStacktrace' => [
             'exclude' => true,
             'inputType' => 'textarea',
-            'eval' => ['class' => 'monospace', 'tl_class' => 'clr', 'rte' => 'ace', 'codeField' => true],
+            'eval' => [
+                'class' => 'monospace',
+                'tl_class' => 'clr',
+                'rte' => 'ace',
+                'codeField' => true,
+            ],
             'sql' => 'text NULL',
         ],
     ],
 ];
 
-//\HeimrichHannot\Haste\Dca\General::addAuthorFieldAndCallback('tl_privacy_protocol_entry');
+// \HeimrichHannot\Haste\Dca\General::addAuthorFieldAndCallback('tl_privacy_protocol_entry');
 //
-//if (class_exists('\HeimrichHannot\ContaoExporterBundle\HeimrichHannotContaoExporterBundle')) {
+// if (class_exists('\HeimrichHannot\ContaoExporterBundle\HeimrichHannotContaoExporterBundle')) {
 //    $backendExportAction = System::getContainer()->get('huh.exporter.action.backendexport');
 //
 //    $GLOBALS['TL_DCA']['tl_privacy_protocol_entry']['list']['global_operations']['export_csv'] = $backendExportAction->getGlobalOperation(
@@ -181,4 +220,4 @@ $GLOBALS['TL_DCA']['tl_privacy_protocol_entry'] = [
 //        'export_xls',
 //        $GLOBALS['TL_LANG']['MSC']['export_xls']
 //    );
-//}
+// }

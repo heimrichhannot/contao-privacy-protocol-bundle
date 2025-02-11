@@ -5,7 +5,7 @@ use HeimrichHannot\PrivacyProtocolBundle\Security\PrivacyProtocolPermissions;
 
 $dca = &$GLOBALS['TL_DCA']['tl_user'];
 
-/**
+/*
  * Palettes
  */
 
@@ -16,7 +16,7 @@ PaletteManipulator::create()
     ->applyToPalette('extend', 'tl_user')
     ->applyToPalette('custom', 'tl_user');
 
-/**
+/*
  * Fields
  */
 

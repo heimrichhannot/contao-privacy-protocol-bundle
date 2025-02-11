@@ -16,19 +16,15 @@ use HeimrichHannot\PrivacyProtocolBundle\Model\PrivacyProtocolEntryModel;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use function array_combine;
-use function array_keys;
-use function array_map;
 
 class PrivacyProtocolEntryContainer
 {
     public function __construct(
-        private readonly RequestStack        $requestStack,
-        private readonly SimpleTokenParser   $parser,
+        private readonly RequestStack $requestStack,
+        private readonly SimpleTokenParser $parser,
         private readonly TranslatorInterface $translator,
-        private readonly Security            $security,
-    )
-    {
+        private readonly Security $security,
+    ) {
     }
 
     #[AsCallback(table: 'tl_privacy_protocol_entry', target: 'config.onload')]
@@ -97,9 +93,9 @@ class PrivacyProtocolEntryContainer
         $title = $this->parser->parse($titlePattern, $data);
 
         return '<div class="tl_content_left">' . $title . ' <span style="color:#b3b3b3; padding-left:3px">[' . Date::parse(
-                Date::getNumericDatimFormat(),
-                (int) $row['dateAdded']
-            ) . ']</span></div>';
+            Date::getNumericDatimFormat(),
+            (int) $row['dateAdded']
+        ) . ']</span></div>';
     }
 
     #[AsCallback(table: 'tl_privacy_protocol_entry', target: 'fields.dataContainer.options')]
@@ -144,9 +140,9 @@ class PrivacyProtocolEntryContainer
                 break;
 
             case 'cut':
-//            case 'copy':
-                if ((string)Input::get('act') == 'cut' && (int)Input::get('mode') == 1) {
-                    $objArchive = $database->prepare("SELECT pid FROM tl_privacy_protocol_entry WHERE id=?")
+                //            case 'copy':
+                if ('cut' == (string) Input::get('act') && 1 == (int) Input::get('mode')) {
+                    $objArchive = $database->prepare('SELECT pid FROM tl_privacy_protocol_entry WHERE id=?')
                         ->limit(1)
                         ->execute(Input::get('pid'));
 
@@ -159,11 +155,10 @@ class PrivacyProtocolEntryContainer
                     $pid = Input::get('pid');
                 }
 
-
                 if (!\in_array($pid, $root)) {
                     throw new AccessDeniedException('Not enough permissions to ' . Input::get('act') . ' private protocol item ID ' . $id . ' to private protocol archive ID ' . Input::get('pid') . '.');
                 }
-            // no break STATEMENT HERE
+                // no break STATEMENT HERE
 
             case 'edit':
             case 'show':
@@ -186,7 +181,7 @@ class PrivacyProtocolEntryContainer
             case 'deleteAll':
             case 'overrideAll':
             case 'cutAll':
-//            case 'copyAll':
+                //            case 'copyAll':
                 if (!\in_array($id, $root)) {
                     throw new AccessDeniedException('Not enough permissions to access private protocol archive ID ' . $id . '.');
                 }
@@ -220,9 +215,9 @@ class PrivacyProtocolEntryContainer
 
     private function prefixArrayKey(array $array, string $prefix): array
     {
-        $keys = array_keys($array);
-        $prefixedKeys = array_map(fn($key) => $prefix . $key, $keys);
+        $keys = \array_keys($array);
+        $prefixedKeys = \array_map(fn ($key) => $prefix . $key, $keys);
 
-        return array_combine($prefixedKeys, $array);
+        return \array_combine($prefixedKeys, $array);
     }
 }

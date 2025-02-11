@@ -22,8 +22,7 @@ class PrivacyProtocolArchiveContainer
     public function __construct(
         private readonly Security $security,
         private readonly RequestStack $requestStack,
-    )
-    {
+    ) {
     }
 
     #[AsCallback(table: 'tl_privacy_protocol_archive', target: 'config.onload')]
@@ -45,7 +44,7 @@ class PrivacyProtocolArchiveContainer
     }
 
     #[AsCallback(table: 'tl_privacy_protocol_archive', target: 'list.operations.edit.button')]
-    public function onListOperationsEditButtonCallback(array $row, ?string $href, string $label, string $title, ?string $icon, string $attributes,): string
+    public function onListOperationsEditButtonCallback(array $row, ?string $href, string $label, string $title, ?string $icon, string $attributes): string
     {
         if (!$this->security->isGranted(ContaoCorePermissions::USER_CAN_EDIT_FIELDS_OF_TABLE, 'tl_privacy_protocol_archive')) {
             return '';
@@ -61,7 +60,7 @@ class PrivacyProtocolArchiveContainer
     }
 
     #[AsCallback(table: 'tl_privacy_protocol_archive', target: 'list.operations.copy.button')]
-    public function onListOperationsCopyButtonCallback(array $row, ?string $href, string $label, string $title, ?string $icon, string $attributes,): string
+    public function onListOperationsCopyButtonCallback(array $row, ?string $href, string $label, string $title, ?string $icon, string $attributes): string
     {
         if (!$this->security->isGranted(PrivacyProtocolPermissions::USER_CAN_CREATE_ARCHIVES)) {
             return '';
@@ -77,7 +76,7 @@ class PrivacyProtocolArchiveContainer
     }
 
     #[AsCallback(table: 'tl_privacy_protocol_archive', target: 'list.operations.delete.button')]
-    public function onListOperationsDeleteButtonCallback(array $row, ?string $href, string $label, string $title, ?string $icon, string $attributes,): string
+    public function onListOperationsDeleteButtonCallback(array $row, ?string $href, string $label, string $title, ?string $icon, string $attributes): string
     {
         if (!$this->security->isGranted(PrivacyProtocolPermissions::USER_CAN_DELETE_ARCHIVES)) {
             return '';
@@ -120,8 +119,7 @@ class PrivacyProtocolArchiveContainer
         }
 
         // Check permissions to delete archives
-        if (!$this->security->isGranted(PrivacyProtocolPermissions::USER_CAN_DELETE_ARCHIVES))
-        {
+        if (!$this->security->isGranted(PrivacyProtocolPermissions::USER_CAN_DELETE_ARCHIVES)) {
             $GLOBALS['TL_DCA']['tl_privacy_protocol_archive']['config']['notDeletable'] = true;
         }
 
@@ -132,8 +130,7 @@ class PrivacyProtocolArchiveContainer
                 break;
 
             case 'create':
-                if (!$this->security->isGranted(PrivacyProtocolPermissions::USER_CAN_CREATE_ARCHIVES))
-                {
+                if (!$this->security->isGranted(PrivacyProtocolPermissions::USER_CAN_CREATE_ARCHIVES)) {
                     throw new AccessDeniedException('Not enough permissions to create protocal archives.');
                 }
                 break;
@@ -141,8 +138,7 @@ class PrivacyProtocolArchiveContainer
             case 'edit':
             case 'delete':
             case 'show':
-                if (!in_array(Input::get('id'), $root) || (Input::get('act') == 'delete' && !$this->security->isGranted(PrivacyProtocolPermissions::USER_CAN_DELETE_ARCHIVES)))
-                {
+                if (!in_array(Input::get('id'), $root) || ('delete' == Input::get('act') && !$this->security->isGranted(PrivacyProtocolPermissions::USER_CAN_DELETE_ARCHIVES))) {
                     throw new AccessDeniedException('Not enough permissions to ' . Input::get('act') . ' protocal archive ID ' . Input::get('id') . '.');
                 }
                 break;
@@ -152,36 +148,28 @@ class PrivacyProtocolArchiveContainer
             case 'overrideAll':
                 $session = $this->requestStack->getSession()->all();
 
-                if (Input::get('act') == 'deleteAll' && !$this->security->isGranted(PrivacyProtocolPermissions::USER_CAN_DELETE_ARCHIVES))
-                {
+                if ('deleteAll' == Input::get('act') && !$this->security->isGranted(PrivacyProtocolPermissions::USER_CAN_DELETE_ARCHIVES)) {
                     $session['CURRENT']['IDS'] = [];
-                }
-                else
-                {
+                } else {
                     $session['CURRENT']['IDS'] = array_intersect((array) $session['CURRENT']['IDS'], $root);
                 }
-            $this->requestStack->getSession()->replace($session);
+                $this->requestStack->getSession()->replace($session);
                 break;
 
             default:
-                if (Input::get('act'))
-                {
+                if (Input::get('act')) {
                     throw new AccessDeniedException('Not enough permissions to ' . Input::get('act') . ' protocol archives.');
                 }
                 break;
         }
-
     }
 
     /**
-     * Add the new archive to the permissions
-     *
-     * @param $insertId
+     * Add the new archive to the permissions.
      */
     protected function adjustPermissions(int $insertId)
     {
-        if ($this->security->isGranted('ROLE_ADMIN'))
-        {
+        if ($this->security->isGranted('ROLE_ADMIN')) {
             return;
         }
 
@@ -196,8 +184,7 @@ class PrivacyProtocolArchiveContainer
         }
 
         // The archive is enabled already
-        if (in_array($insertId, $root))
-        {
+        if (in_array($insertId, $root)) {
             return;
         }
 
@@ -208,47 +195,41 @@ class PrivacyProtocolArchiveContainer
 
         $arrNew = $objSessionBag->get('new_records');
 
-        if (is_array($arrNew['tl_privacy_protocol_archive']) && in_array($insertId, $arrNew['tl_privacy_protocol_archive']))
-        {
+        if (is_array($arrNew['tl_privacy_protocol_archive']) && in_array($insertId, $arrNew['tl_privacy_protocol_archive'])) {
             // Add the permissions on group level
-            if ($user->inherit != 'custom')
-            {
+            if ('custom' != $user->inherit) {
                 $objGroup = $database->execute(
-                    "SELECT id, privacy_protocols, privacy_protocolp FROM tl_user_group WHERE id IN(" . implode(',', array_map('\intval', $user->groups)) . ")"
+                    'SELECT id, privacy_protocols, privacy_protocolp FROM tl_user_group WHERE id IN(' . implode(',', array_map('\intval', $user->groups)) . ')'
                 );
 
-                while ($objGroup->next())
-                {
+                while ($objGroup->next()) {
                     $arrNewp = StringUtil::deserialize($objGroup->privacy_protocolp);
 
-                    if (is_array($arrNewp) && in_array('create', $arrNewp))
-                    {
+                    if (is_array($arrNewp) && in_array('create', $arrNewp)) {
                         $archives = StringUtil::deserialize($objGroup->privacy_protocols, true);
                         $archives[] = $insertId;
 
-                        $database->prepare("UPDATE tl_user_group SET privacy_protocols=? WHERE id=?")
+                        $database->prepare('UPDATE tl_user_group SET privacy_protocols=? WHERE id=?')
                             ->execute(serialize($archives), $objGroup->id);
                     }
                 }
             }
 
             // Add the permissions on user level
-            if ($user->inherit != 'group')
-            {
+            if ('group' != $user->inherit) {
                 $objUser = $database->prepare(
-                    "SELECT privacy_protocols, privacy_protocolp FROM tl_user WHERE id=?"
+                    'SELECT privacy_protocols, privacy_protocolp FROM tl_user WHERE id=?'
                 )
                     ->limit(1)
                     ->execute($user->id);
 
                 $arrNewp = StringUtil::deserialize($objUser->privacy_protocolp);
 
-                if (is_array($arrNewp) && in_array('create', $arrNewp))
-                {
+                if (is_array($arrNewp) && in_array('create', $arrNewp)) {
                     $archives = StringUtil::deserialize($objUser->privacy_protocols, true);
                     $archives[] = $insertId;
 
-                    $database->prepare("UPDATE tl_user SET privacy_protocols=? WHERE id=?")
+                    $database->prepare('UPDATE tl_user SET privacy_protocols=? WHERE id=?')
                         ->execute(serialize($archives), $user->id);
                 }
             }

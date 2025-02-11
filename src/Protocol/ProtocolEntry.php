@@ -15,15 +15,14 @@ class ProtocolEntry
     public ?int $codeLine = null;
     public ?string $codeFunction = null;
     public ?string $codeStacktrace = null;
-    public UserModel|null $author = null;
+    public ?UserModel $author = null;
 
     public function __construct(
-        public array        $person,
-        public array        $target,
+        public array $person,
+        public array $target,
         public ProtocolType $type,
-        public int          $archiveId,
-        public ?string      $packageName = null
-    )
-    {
+        public int $archiveId,
+        public ?string $packageName = null,
+    ) {
     }
 }

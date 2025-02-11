@@ -2,7 +2,7 @@
 
 $lang = &$GLOBALS['TL_LANG']['tl_privacy_protocol_archive'];
 
-/**
+/*
  * Fields
  */
 $lang['tstamp'][0] = 'Änderungsdatum';
@@ -15,13 +15,13 @@ $lang['skipIpAnonymization'][1] = 'Wählen Sie diese Option, wenn IP-Adressen NI
 $lang['addCodeProtocol'][0] = 'Quelltextbezogene Daten erfassen';
 $lang['addCodeProtocol'][1] = 'Wählen Sie diese Option, um quelltextbezogene Daten zu erfassen.';
 
-/**
+/*
  * Legends
  */
 $lang['general_legend'] = 'Titel';
 $lang['config_legend'] = 'Konfiguration';
 
-/**
+/*
  * Buttons
  */
 $lang['new'] = ['Neues Protokollarchiv', 'Protokollarchiv erstellen'];

@@ -5,7 +5,7 @@ use HeimrichHannot\PrivacyProtocolBundle\Protocol\ProtocolType;
 
 $lang = &$GLOBALS['TL_LANG']['tl_privacy_protocol_entry'];
 
-/**
+/*
  * Fields
  */
 $lang['tstamp'] = ['Revision date', ''];
@@ -31,7 +31,7 @@ $lang['bundleVersion'][1] = 'In this field the version of the bundle is stored.'
 $lang['codeStacktrace'][0] = 'Stacktrace';
 $lang['codeStacktrace'][1] = 'In this field the stacktrace to the calling function is stored.';
 
-/**
+/*
  * Reference
  */
 $lang['reference'] = [
@@ -48,14 +48,14 @@ $lang['reference'] = [
     ProtocolCmsScope::FRONTEND->value => 'Frontend',
 ];
 
-/**
+/*
  * Legends
  */
 $lang['interaction_legend'] = 'Interaction';
 $lang['context_legend'] = 'Context';
 $lang['code_legend'] = 'Code';
 
-/**
+/*
  * Buttons
  */
 $lang['new'] = ['New Protokolleintrag', 'Protokolleintrag create'];
