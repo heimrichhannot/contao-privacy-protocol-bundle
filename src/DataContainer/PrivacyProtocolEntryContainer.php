@@ -6,7 +6,6 @@ use Contao\BackendUser;
 use Contao\CoreBundle\DataContainer\PaletteManipulator;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsCallback;
 use Contao\CoreBundle\Exception\AccessDeniedException;
-use Contao\CoreBundle\ServiceAnnotation\Callback;
 use Contao\CoreBundle\String\SimpleTokenParser;
 use Contao\Database;
 use Contao\DataContainer;
@@ -66,9 +65,7 @@ class PrivacyProtocolEntryContainer
         $pm->applyToPalette('default', 'tl_privacy_protocol_entry');
     }
 
-    /**
-     * @Callback(table="tl_privacy_protocol_entry", target="list.sorting.child_record")
-     */
+    #[AsCallback(table: 'tl_privacy_protocol_entry', target: 'list.sorting.child_record')]
     public function onListSortingChildRecordCallback(array $row): string
     {
         $titlePattern = '##type## (##id##)';

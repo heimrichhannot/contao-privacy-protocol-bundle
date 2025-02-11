@@ -3,11 +3,9 @@
 namespace HeimrichHannot\PrivacyProtocolBundle\DataContainer;
 
 use Contao\Backend;
-use Contao\BackendUser;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsCallback;
 use Contao\CoreBundle\Exception\AccessDeniedException;
 use Contao\CoreBundle\Security\ContaoCorePermissions;
-use Contao\CoreBundle\ServiceAnnotation\Callback;
 use Contao\Database;
 use Contao\DataContainer;
 use Contao\Image;
@@ -45,9 +43,7 @@ class PrivacyProtocolArchiveContainer
         $this->adjustPermissions($insertId);
     }
 
-    /**
-     * @Callback(table="tl_privacy_protocol_archive", target="list.operations.edit.button")
-     */
+    #[AsCallback(table: 'tl_privacy_protocol_archive', target: 'list.operations.edit.button')]
     public function onListOperationsEditButtonCallback(array $row, ?string $href, string $label, string $title, ?string $icon, string $attributes,): string
     {
         if (!$this->security->isGranted(ContaoCorePermissions::USER_CAN_EDIT_FIELDS_OF_TABLE, 'tl_privacy_protocol_archive')) {
@@ -63,9 +59,7 @@ class PrivacyProtocolArchiveContainer
         );
     }
 
-    /**
-     * @Callback(table="tl_privacy_protocol_archive", target="list.operations.copy.button")
-     */
+    #[AsCallback(table: 'tl_privacy_protocol_archive', target: 'list.operations.copy.button')]
     public function onListOperationsCopyButtonCallback(array $row, ?string $href, string $label, string $title, ?string $icon, string $attributes,): string
     {
         if (!$this->security->isGranted(PrivacyProtocolPermissions::USER_CAN_CREATE_ARCHIVES)) {
@@ -81,9 +75,7 @@ class PrivacyProtocolArchiveContainer
         );
     }
 
-    /**
-     * @Callback(table="tl_privacy_protocol_archive", target="list.operations.delete.button")
-     */
+    #[AsCallback(table: 'tl_privacy_protocol_archive', target: 'list.operations.delete.button')]
     public function onListOperationsDeleteButtonCallback(array $row, ?string $href, string $label, string $title, ?string $icon, string $attributes,): string
     {
         if (!$this->security->isGranted(PrivacyProtocolPermissions::USER_CAN_DELETE_ARCHIVES)) {
@@ -158,7 +150,7 @@ class PrivacyProtocolArchiveContainer
 
                 if (Input::get('act') == 'deleteAll' && !$this->security->isGranted(PrivacyProtocolPermissions::USER_CAN_DELETE_ARCHIVES))
                 {
-                    $session['CURRENT']['IDS'] = array();
+                    $session['CURRENT']['IDS'] = [];
                 }
                 else
                 {

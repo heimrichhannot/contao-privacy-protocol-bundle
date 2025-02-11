@@ -3,11 +3,7 @@
 namespace HeimrichHannot\PrivacyProtocolBundle\Protocol;
 
 use Composer\InstalledVersions;
-use Contao\BackendUser;
-use Contao\ContentModel;
 use Contao\CoreBundle\Routing\ScopeMatcher;
-use Contao\FrontendUser;
-use Contao\ModuleModel;
 use Contao\System;
 use HeimrichHannot\PrivacyProtocolBundle\Model\PrivacyProtocolArchiveModel;
 use HeimrichHannot\PrivacyProtocolBundle\Model\PrivacyProtocolEntryModel;
