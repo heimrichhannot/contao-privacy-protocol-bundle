@@ -143,7 +143,6 @@ class PrivacyProtocolArchiveContainer
                 break;
 
             case 'edit':
-            case 'copy':
             case 'delete':
             case 'show':
                 if (!in_array(Input::get('id'), $root) || (Input::get('act') == 'delete' && !$this->security->isGranted(PrivacyProtocolPermissions::USER_CAN_DELETE_ARCHIVES)))
@@ -155,7 +154,6 @@ class PrivacyProtocolArchiveContainer
             case 'editAll':
             case 'deleteAll':
             case 'overrideAll':
-            case 'copyAll':
                 $session = $this->requestStack->getSession()->all();
 
                 if (Input::get('act') == 'deleteAll' && !$this->security->isGranted(PrivacyProtocolPermissions::USER_CAN_DELETE_ARCHIVES))

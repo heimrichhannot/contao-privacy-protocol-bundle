@@ -15,12 +15,10 @@ use Contao\Model;
  * @property int $tstamp
  * @property int $pid
  * @property int $dateAdded
- *
  * @property string $type
  * @property string $person
  * @property string $target
  * @property string $description
- *
  * @property string $codeStacktrace
  * @property string $cmsScope
  * @property string $ip

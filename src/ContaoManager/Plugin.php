@@ -23,8 +23,8 @@ class Plugin implements BundlePluginInterface, ConfigPluginInterface
         ];
     }
 
-    public function registerContainerConfiguration(LoaderInterface $loader, array $managerConfig)
+    public function registerContainerConfiguration(LoaderInterface $loader, array $managerConfig): void
     {
-        return $loader->load(__DIR__ . '/../../config/services.yaml');
+        $loader->load(__DIR__ . '/../../config/services.yaml');
     }
 }
