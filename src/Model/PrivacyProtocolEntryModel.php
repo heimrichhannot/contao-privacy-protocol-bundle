@@ -24,7 +24,7 @@ use Contao\Model;
  * @property string $ip
  * @property string $url
  * @property string $bundle
- * @property string bundleVersion
+ * @property string $bundleVersion
  *
  */
 class PrivacyProtocolEntryModel extends Model

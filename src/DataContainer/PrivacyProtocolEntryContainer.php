@@ -34,7 +34,7 @@ class PrivacyProtocolEntryContainer
     #[AsCallback(table: 'tl_privacy_protocol_entry', target: 'config.onload')]
     public function onConfigLoadCallback(?DataContainer $dc = null): void
     {
-        $this->checkPermission();
+        $this->checkPermission($dc);
 
         if (null === $dc || !$dc->id || 'edit' !== $this->requestStack->getCurrentRequest()->query->get('act')) {
             return;
@@ -98,7 +98,7 @@ class PrivacyProtocolEntryContainer
 
         return '<div class="tl_content_left">' . $title . ' <span style="color:#b3b3b3; padding-left:3px">[' . Date::parse(
                 Date::getNumericDatimFormat(),
-                trim((string) $row['dateAdded'])
+                (int) $row['dateAdded']
             ) . ']</span></div>';
     }
 
@@ -108,7 +108,7 @@ class PrivacyProtocolEntryContainer
         return Database::getInstance()->listTables();
     }
 
-    private function checkPermission(): void
+    private function checkPermission(?DataContainer $dc = null): void
     {
         if ($this->security->isGranted('ROLE_ADMIN')) {
             return;
@@ -125,14 +125,13 @@ class PrivacyProtocolEntryContainer
             $root = $user->privacy_protocols;
         }
 
-        $id = ($this->requestStack->getCurrentRequest()?->query->get('id') ?? CURRENT_ID);
+        $id = ($this->requestStack->getCurrentRequest()?->query->get('id') ?? $dc->currentPid);
 
         // Check current action
         switch (Input::get('act')) {
             case 'paste':
             case 'select':
-                // Check CURRENT_ID here (see #247)
-                if (!in_array(CURRENT_ID, $root)) {
+                if (!in_array($dc->currentPid, $root)) {
                     throw new AccessDeniedException('Not enough permissions to access private protocol ID ' . $id . '.');
                 }
                 break;
@@ -146,7 +145,7 @@ class PrivacyProtocolEntryContainer
 
             case 'cut':
 //            case 'copy':
-                if (Input::get('act') == 'cut' && Input::get('mode') == 1) {
+                if ((string)Input::get('act') == 'cut' && (int)Input::get('mode') == 1) {
                     $objArchive = $database->prepare("SELECT pid FROM tl_privacy_protocol_entry WHERE id=?")
                         ->limit(1)
                         ->execute(Input::get('pid'));

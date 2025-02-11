@@ -8,7 +8,6 @@ use Contao\System;
 use HeimrichHannot\PrivacyProtocolBundle\Model\PrivacyProtocolArchiveModel;
 use HeimrichHannot\PrivacyProtocolBundle\Model\PrivacyProtocolEntryModel;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Security\Core\Security;
 
 class PrivacyProtocolLogger
 {
@@ -17,7 +16,6 @@ class PrivacyProtocolLogger
     public function __construct(
         private readonly RequestStack $requestStack,
         private readonly ScopeMatcher $scopeMatcher,
-        private readonly Security $security,
     )
     {
     }
@@ -83,6 +81,7 @@ class PrivacyProtocolLogger
         $this->stackTrace = null;
 
         $model->codeStacktrace =
+            /** @phpstan-ignore nullCoalesce.expr */
             ($entry->codeFile ?? $this->getRelevantStackTrace()['file'] ?? '') . ':'
             . ($entry->codeFunction ?? $this->getRelevantStackTrace()['function'] ?? '')
             . '(' . ($entry->codeLine ?? $this->getRelevantStackTrace()['line'] ?? '') . ")\n"

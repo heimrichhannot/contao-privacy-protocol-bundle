@@ -3,6 +3,7 @@
 namespace HeimrichHannot\PrivacyProtocolBundle\DataContainer;
 
 use Contao\Backend;
+use Contao\BackendUser;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsCallback;
 use Contao\CoreBundle\Exception\AccessDeniedException;
 use Contao\CoreBundle\Security\ContaoCorePermissions;
@@ -97,6 +98,9 @@ class PrivacyProtocolArchiveContainer
             return;
         }
 
+        /**
+         * @var BackendUser $user
+         */
         $user = $this->security->getUser();
 
         // Set root IDs
@@ -181,6 +185,7 @@ class PrivacyProtocolArchiveContainer
             return;
         }
 
+        /** @var BackendUser $user */
         $user = $this->security->getUser();
 
         // Set root IDs
