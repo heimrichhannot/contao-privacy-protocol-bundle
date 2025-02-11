@@ -68,7 +68,6 @@ $GLOBALS['TL_DCA']['tl_privacy_protocol_entry'] = [
         'default' =>
             '{interaction_legend},type,person,target,dateAdded,description;'.
             '{context_legend},author,url,cmsScope,bundle,bundleVersion,ip,module,element;'.
-            '{user_legend},member,user;'.
             '{code_legend},codeStacktrace;',
 
 //        'default' => '{type_date_legend},type,dateAdded,author;'
@@ -121,28 +120,6 @@ $GLOBALS['TL_DCA']['tl_privacy_protocol_entry'] = [
             'inputType' => 'text',
             'eval' => ['maxlength' => 64, 'tl_class' => 'w50', 'personalField' => true],
             'sql' => "varchar(64) NOT NULL default ''",
-        ],
-        'member' => [
-            'exclude' => true,
-            'inputType' => 'picker',
-            'relation' => [
-                'type' => 'hasOne',
-                'load' => 'lazy',
-                'table' => 'tl_member',
-            ],
-            'eval' => ['tl_class' => 'w50',],
-            'sql' => "int(10) unsigned NOT NULL default '0'",
-        ],
-        'user' => [
-            'exclude' => true,
-            'inputType' => 'picker',
-            'relation' => [
-                'type' => 'hasOne',
-                'load' => 'lazy',
-                'table' => 'tl_user',
-            ],
-            'eval' => ['tl_class' => 'w50',],
-            'sql' => "int(10) unsigned NOT NULL default '0'",
         ],
         // interaction
         'url' => [

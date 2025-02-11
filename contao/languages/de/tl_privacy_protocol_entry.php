@@ -30,10 +30,6 @@ $lang['target'][1] = 'In diesem Feld wird das Ziel der Interaktion gespeichert.'
 // user
 $lang['ip'][0] = 'IP-Adresse';
 $lang['ip'][1] = 'In diesem Feld wird die IP-Adresse des Besuchers gespeichert.';
-$lang['member'][0] = 'Mitglied';
-$lang['member'][1] = 'In diesem Feld wird die ID des Mitglieds gespeichert.';
-$lang['user'][0] = 'Benutzer';
-$lang['user'][1] = 'In diesem Feld wird die ID des Benutzers gespeichert.';
 
 // interaction
 $lang['url'][0] = 'URL';
@@ -75,7 +71,6 @@ $lang['reference'] = [
  */
 $lang['interaction_legend'] = 'Interaktion';
 $lang['context_legend'] = 'Kontext';
-$lang['user_legend'] = 'Nutzer';
 $lang['code_legend'] = 'Quelltext';
 
 /*

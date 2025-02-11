@@ -77,13 +77,6 @@ class PrivacyProtocolLogger
         $protocolEntry->module = (int) ($entry->module instanceof ModuleModel ? $entry->module->id : $entry->module);
         $protocolEntry->contentElement = (int) ($entry->contentElement instanceof ContentModel ? $entry->contentElement->id : $entry->contentElement);
 
-        $user = $this->security->getUser();
-        if ($user instanceof FrontendUser) {
-            $protocolEntry->member = $user->id;
-        } elseif ($user instanceof BackendUser) {
-            $protocolEntry->user = $user->id;
-        }
-
         $protocolEntry->save();
     }
 

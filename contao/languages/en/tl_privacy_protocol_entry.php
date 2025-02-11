@@ -17,7 +17,6 @@ $lang['target'][1] = 'In this field the target of the interaction is stored.';
  */
 $lang['interaction_legend'] = 'Interaction';
 $lang['context_legend'] = 'Context';
-$lang['user_legend'] = 'User';
 $lang['code_legend'] = 'Code';
 
 /**

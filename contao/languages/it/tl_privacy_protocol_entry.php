@@ -38,10 +38,6 @@ $lang['lastname'][0] = 'Cognome';
 $lang['lastname'][1] = 'In questo campo verrà memorizzato il cognome del visitatore.';
 $lang['agreement'][0] = 'Accetto l\'informativa sulla privacy.';
 $lang['agreement'][1] = 'In questo campo verrà memorizzato il consenso del visitatore.';
-$lang['member'][0] = 'Membro';
-$lang['member'][1] = 'In questo campo verrà memorizzato l\'ID del membro.';
-$lang['user'][0] = 'Utente';
-$lang['user'][1] = 'In questo campo verrà memorizzato l\'ID dell\'utente.';
 
 // interaction
 $lang['url'][0] = 'URL';
@@ -98,7 +94,6 @@ $lang['reference'] = [
  */
 $lang['interaction_legend'] = 'Interazione';
 $lang['context_legend'] = 'Contesto';
-$lang['user_legend'] = 'Itente';
 $lang['code_legend'] = 'Codice sorgente';
 
 /*
