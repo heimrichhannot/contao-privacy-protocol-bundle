@@ -6,7 +6,6 @@
  * @license LGPL-3.0-or-later
  */
 
-use HeimrichHannot\PrivacyBundle\DataContainer\ProtocolEntryContainer;
 use HeimrichHannot\PrivacyProtocolBundle\Protocol\ProtocolCmsScope;
 use HeimrichHannot\PrivacyProtocolBundle\Protocol\ProtocolType;
 
@@ -16,8 +15,6 @@ $lang = &$GLOBALS['TL_LANG']['tl_privacy_protocol_entry'];
  * Fields
  */
 $lang['tstamp'][0] = 'Änderungsdatum';
-
-// type & date
 $lang['type'][0] = 'Typ';
 $lang['type'][1] = 'In diesem Feld wird der Typ gespeichert.';
 $lang['description'][0] = 'Beschreibung';
@@ -26,12 +23,8 @@ $lang['person'][0] = 'Person';
 $lang['person'][1] = 'In diesem Feld werden die Daten der ausführenden Person gespeichert.';
 $lang['target'][0] = 'Ziel';
 $lang['target'][1] = 'In diesem Feld wird das Ziel der Interaktion gespeichert.';
-
-// user
 $lang['ip'][0] = 'IP-Adresse';
 $lang['ip'][1] = 'In diesem Feld wird die IP-Adresse des Besuchers gespeichert.';
-
-// interaction
 $lang['url'][0] = 'URL';
 $lang['url'][1] = 'In diesem Feld wird die URL gespeichert, unter der die Interaktion stattgefunden hat.';
 $lang['cmsScope'][0] = 'CMS-Modus';
@@ -40,8 +33,6 @@ $lang['bundle'][0] = 'Bundle';
 $lang['bundle'][1] = 'In diesem Feld wird gespeichert, in welchem Bundle die Interaktion stattgefunden hat.';
 $lang['bundleVersion'][0] = 'Bundle-Version';
 $lang['bundleVersion'][1] = 'In diesem Feld wird die Version des Bundles gespeichert.';
-
-// code
 $lang['codeStacktrace'][0] = 'Stacktrace';
 $lang['codeStacktrace'][1] = 'In diesem Feld wird der Stacktrace zur aufrufenden Funktion gespeichert.';
 
