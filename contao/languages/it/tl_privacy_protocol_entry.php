@@ -1,12 +1,5 @@
 <?php
 
-/*
- * Copyright (c) 2021 Heimrich & Hannot GmbH
- *
- * @license LGPL-3.0-or-later
- */
-
-use HeimrichHannot\PrivacyBundle\DataContainer\ProtocolEntryContainer;
 use HeimrichHannot\PrivacyProtocolBundle\Protocol\ProtocolCmsScope;
 use HeimrichHannot\PrivacyProtocolBundle\Protocol\ProtocolType;
 

@@ -123,9 +123,7 @@ $GLOBALS['TL_DCA']['tl_privacy_protocol_entry'] = [
             'exclude' => true,
             'filter' => true,
             'inputType' => 'select',
-            'options_callback' => static function () {
-                return ProtocolCmsScope::values();
-            },
+            'options_callback' => static fn() => ProtocolCmsScope::values(),
             'reference' => &$GLOBALS['TL_LANG']['tl_privacy_protocol_entry']['reference'],
             'eval' => ['tl_class' => 'w50', 'mandatory' => true, 'submitOnChange' => true, 'includeBlankOption' => true],
             'sql' => "varchar(16) NOT NULL default ''",
@@ -149,9 +147,7 @@ $GLOBALS['TL_DCA']['tl_privacy_protocol_entry'] = [
             'exclude' => true,
             'filter' => true,
             'inputType' => 'select',
-            'options_callback' => static function () {
-                return ProtocolType::values();
-            },
+            'options_callback' => static fn() => ProtocolType::values(),
             'reference' => &$GLOBALS['TL_LANG']['tl_privacy_protocol_entry']['reference'],
             'eval' => ['tl_class' => 'w50', 'mandatory' => true, 'includeBlankOption' => true, 'chosen' => true],
             'sql' => "varchar(32) NOT NULL default ''",

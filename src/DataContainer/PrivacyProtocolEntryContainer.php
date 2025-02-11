@@ -98,7 +98,7 @@ class PrivacyProtocolEntryContainer
 
         return '<div class="tl_content_left">' . $title . ' <span style="color:#b3b3b3; padding-left:3px">[' . Date::parse(
                 Date::getNumericDatimFormat(),
-                trim($row['dateAdded'])
+                trim((string) $row['dateAdded'])
             ) . ']</span></div>';
     }
 
