@@ -54,22 +54,22 @@ $GLOBALS['TL_DCA']['tl_privacy_protocol_entry'] = [
             'edit' => [
                 'label' => &$GLOBALS['TL_LANG']['tl_privacy_protocol_entry']['edit'],
                 'href' => 'act=edit',
-                'icon' => 'edit.gif',
+                'icon' => 'edit.svg',
             ],
             'show' => [
                 'label' => &$GLOBALS['TL_LANG']['tl_privacy_protocol_entry']['show'],
                 'href' => 'act=show',
-                'icon' => 'show.gif',
+                'icon' => 'show.svg',
             ],
         ],
     ],
     'palettes' => [
         '__selector__' => [],
-        'default' => '{type_date_legend},type,dateAdded,author,description;'
-            .'{data_legend},data,ip,email;'
-            .'{interaction_legend},url,cmsScope,bundle,bundleVersion,dataContainer,description,module,element;'
-            .'{user_legend},member,user;'
-            .'{code_legend},codeStacktrace;',
+        'default' =>
+            '{interaction_legend},type,person,target,dateAdded,description;'.
+            '{context_legend},author,url,cmsScope,bundle,bundleVersion,ip,module,element;'.
+            '{user_legend},member,user;'.
+            '{code_legend},codeStacktrace;',
 
 //        'default' => '{type_date_legend},type,dateAdded,author;'
 //            .'{data_legend},data,ip,email;'
@@ -90,6 +90,30 @@ $GLOBALS['TL_DCA']['tl_privacy_protocol_entry'] = [
             'eval' => ['rgxp' => 'datim'],
             'sql' => "int(10) unsigned NOT NULL default '0'",
         ],
+        'person' => [
+            'inputType' => 'textarea',
+            'eval' => [
+                'readonly' => true,
+                'decodeEntities' => true,
+                'tl_class' => 'clr',
+            ],
+            'sql' => ['type' => 'blob', 'notnull' => false],
+        ],
+        'target' => [
+            'inputType' => 'textarea',
+            'eval' => [
+                'readonly' => true,
+                'decodeEntities' => true,
+                'tl_class' => 'clr',
+            ],
+            'sql' => ['type' => 'blob', 'notnull' => false],
+        ],
+
+
+
+
+
+
         'ip' => [
             'label' => &$GLOBALS['TL_LANG']['tl_privacy_protocol_entry']['ip'],
             'exclude' => true,
@@ -97,14 +121,6 @@ $GLOBALS['TL_DCA']['tl_privacy_protocol_entry'] = [
             'inputType' => 'text',
             'eval' => ['maxlength' => 64, 'tl_class' => 'w50', 'personalField' => true],
             'sql' => "varchar(64) NOT NULL default ''",
-        ],
-        'email' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_privacy_protocol_entry']['email'],
-            'exclude' => true,
-            'search' => true,
-            'inputType' => 'text',
-            'eval' => ['maxlength' => 128, 'rgxp' => 'email', 'tl_class' => 'w50', 'personalField' => true],
-            'sql' => "varchar(128) NOT NULL default ''",
         ],
         'member' => [
             'exclude' => true,
@@ -163,14 +179,6 @@ $GLOBALS['TL_DCA']['tl_privacy_protocol_entry'] = [
             'eval' => ['maxlength' => 64, 'tl_class' => 'w50'],
             'sql' => "varchar(64) NOT NULL default ''",
         ],
-        'dataContainer' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_privacy_protocol_entry']['dataContainer'],
-            'exclude' => true,
-            'filter' => true,
-            'inputType' => 'select',
-            'eval' => ['tl_class' => 'w50', 'includeBlankOption' => true, 'chosen' => true],
-            'sql' => "varchar(64) NOT NULL default ''",
-        ],
         'type' => [
             'exclude' => true,
             'filter' => true,
@@ -183,21 +191,6 @@ $GLOBALS['TL_DCA']['tl_privacy_protocol_entry'] = [
             'sql' => "varchar(32) NOT NULL default ''",
         ],
         'description' => [
-            'exclude' => true,
-            'search' => true,
-            'inputType' => 'textarea',
-            'eval' => ['tl_class' => 'long clr'],
-            'sql' => 'text NULL',
-        ],
-        'data' => [
-            'inputType' => 'textarea',
-            'eval' => [
-                'readonly' => true,
-                'decodeEntities' => true,
-            ],
-            'sql' => ['type' => 'blob', 'notnull' => false],
-        ],
-        'additionalData' => [
             'exclude' => true,
             'search' => true,
             'inputType' => 'textarea',

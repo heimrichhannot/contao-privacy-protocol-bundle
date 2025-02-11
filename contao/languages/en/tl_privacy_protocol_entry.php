@@ -7,9 +7,18 @@ $lang = &$GLOBALS['TL_LANG']['tl_privacy_protocol_entry'];
  */
 $lang['tstamp'] = ['Revision date', ''];
 
+$lang['person'][0] = 'Person';
+$lang['person'][1] = 'In this field the data of the executing person is stored.';
+$lang['target'][0] = 'Target';
+$lang['target'][1] = 'In this field the target of the interaction is stored.';
+
 /**
  * Legends
  */
+$lang['interaction_legend'] = 'Interaction';
+$lang['context_legend'] = 'Context';
+$lang['user_legend'] = 'User';
+$lang['code_legend'] = 'Code';
 
 /**
  * Buttons

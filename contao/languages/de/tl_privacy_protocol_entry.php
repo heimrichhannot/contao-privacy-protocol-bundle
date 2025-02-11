@@ -22,16 +22,14 @@ $lang['type'][0] = 'Typ';
 $lang['type'][1] = 'In diesem Feld wird der Typ gespeichert.';
 $lang['description'][0] = 'Beschreibung';
 $lang['description'][1] = 'In diesem Feld wird eine Beschreibung gespeichert.';
-
-// data
-$lang['data'][0] = 'Daten';
-$lang['data'][1] = 'In diesem Feld werden die Benutzerdaten gespeichert.';
+$lang['person'][0] = 'Person';
+$lang['person'][1] = 'In diesem Feld werden die Daten der ausführenden Person gespeichert.';
+$lang['target'][0] = 'Ziel';
+$lang['target'][1] = 'In diesem Feld wird das Ziel der Interaktion gespeichert.';
 
 // user
 $lang['ip'][0] = 'IP-Adresse';
 $lang['ip'][1] = 'In diesem Feld wird die IP-Adresse des Besuchers gespeichert.';
-$lang['email'][0] = 'E-Mail-Adresse';
-$lang['email'][1] = 'In diesem Feld wird die E-Mail-Adresse des Besuchers gespeichert.';
 $lang['member'][0] = 'Mitglied';
 $lang['member'][1] = 'In diesem Feld wird die ID des Mitglieds gespeichert.';
 $lang['user'][0] = 'Benutzer';
@@ -46,11 +44,6 @@ $lang['bundle'][0] = 'Bundle';
 $lang['bundle'][1] = 'In diesem Feld wird gespeichert, in welchem Bundle die Interaktion stattgefunden hat.';
 $lang['bundleVersion'][0] = 'Bundle-Version';
 $lang['bundleVersion'][1] = 'In diesem Feld wird die Version des Bundles gespeichert.';
-$lang['dataContainer'][0] = 'Tabelle';
-$lang['dataContainer'][1] = 'In diesem Feld wird die Tabelle gespeichert, in der sich der Nutzer befand.';
-
-$lang['additionalData'][0] = 'Zusätzliche Daten';
-$lang['additionalData'][1] = 'In diesem Feld werden kontextabhängige zusätzliche Daten gespeichert.';
 $lang['module'][0] = 'Modul';
 $lang['module'][1] = 'In diesem Feld wird die ID des Moduls gespeichert.';
 $lang['element'][0] = 'Inhaltselement';
@@ -80,10 +73,9 @@ $lang['reference'] = [
 /*
  * Legends
  */
-$lang['type_date_legend'] = 'Typ und Zeitpunkt';
-$lang['data_legend'] = 'Quelltext';
-$lang['user_legend'] = 'Nutzer';
 $lang['interaction_legend'] = 'Interaktion';
+$lang['context_legend'] = 'Kontext';
+$lang['user_legend'] = 'Nutzer';
 $lang['code_legend'] = 'Quelltext';
 
 /*

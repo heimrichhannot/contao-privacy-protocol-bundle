@@ -42,9 +42,8 @@ class PrivacyProtocolLogger
         $protocolEntry->tstamp = $protocolEntry->dateAdded = time();
         $protocolEntry->pid = $archive->id;
         $protocolEntry->type = $entry->type->value;
-        $protocolEntry->data = json_encode($entry->data, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT);
-        $protocolEntry->email = $entry->email;
-        $protocolEntry->description = $entry->description;
+        $protocolEntry->person = json_encode($entry->person, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT);
+        $protocolEntry->target = json_encode($entry->target, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT);
 
         $this->code($protocolEntry, $entry, $archive);
 
@@ -75,9 +74,6 @@ class PrivacyProtocolLogger
         } elseif ($entry->packageName) {
             $protocolEntry->bundleVersion = InstalledVersions::getVersion($entry->packageName);
         }
-
-        $protocolEntry->dataContainer = $entry->dataContainer;
-
         $protocolEntry->module = (int) ($entry->module instanceof ModuleModel ? $entry->module->id : $entry->module);
         $protocolEntry->contentElement = (int) ($entry->contentElement instanceof ContentModel ? $entry->contentElement->id : $entry->contentElement);
 

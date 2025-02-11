@@ -6,7 +6,6 @@ use Contao\Controller;
 
 class PrivacyProtocolPermissions
 {
-    public const USER_CAN_EDIT_ARCHIVE = 'contao_user.privacy_protocols';
     public const USER_CAN_CREATE_ARCHIVES = 'contao_user.privacy_protocolp.create';
     public const USER_CAN_DELETE_ARCHIVES = 'contao_user.privacy_protocolp.delete';
 

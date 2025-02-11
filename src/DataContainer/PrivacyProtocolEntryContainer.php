@@ -14,10 +14,12 @@ use Contao\Date;
 use Contao\Input;
 use HeimrichHannot\PrivacyProtocolBundle\Model\PrivacyProtocolArchiveModel;
 use HeimrichHannot\PrivacyProtocolBundle\Model\PrivacyProtocolEntryModel;
-use HeimrichHannot\UtilsBundle\Util\Utils;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use function array_combine;
+use function array_keys;
+use function array_map;
 
 class PrivacyProtocolEntryContainer
 {
@@ -26,7 +28,6 @@ class PrivacyProtocolEntryContainer
         private readonly SimpleTokenParser   $parser,
         private readonly TranslatorInterface $translator,
         private readonly Security            $security,
-        private readonly Utils               $utils,
     )
     {
     }
@@ -79,11 +80,22 @@ class PrivacyProtocolEntryContainer
         }
 
         $data = array_merge(
-            json_decode($protocolEntry->data, true) ?? [],
+            $this->prefixArrayKey(json_decode($protocolEntry->target, true) ?? [], 'target_'),
+            $this->prefixArrayKey(json_decode($protocolEntry->person, true) ?? [], 'person_'),
             array_filter($protocolEntry->row())
         );
+
         $data['pid'] = $protocolArchive->title;
         $data['type'] = $this->translator->trans('tl_privacy_protocol_entry.reference.' . $protocolEntry->type, [], 'contao_tl_privacy_protocol_entry');
+
+        if (isset($data['person_email'])) {
+            $data['email'] = $data['person_email'];
+        }
+        if (isset($data['person_name'])) {
+            $data['name'] = $data['person_name'];
+        } elseif (isset($data['person_firstname']) && $data['person_lastname']) {
+            $data['name'] = $data['person_firstname'] . ' ' . $data['person_lastname'];
+        }
 
         $title = $this->parser->parse($titlePattern, $data);
 
@@ -208,5 +220,13 @@ class PrivacyProtocolEntryContainer
 
                 break;
         }
+    }
+
+    private function prefixArrayKey(array $array, string $prefix): array
+    {
+        $keys = array_keys($array);
+        $prefixedKeys = array_map(fn($key) => $prefix . $key, $keys);
+
+        return array_combine($prefixedKeys, $array);
     }
 }

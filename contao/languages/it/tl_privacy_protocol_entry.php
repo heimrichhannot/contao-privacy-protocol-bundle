@@ -19,6 +19,11 @@ $lang['type'][1] = 'In questo campo va specificato il tipo.';
 $lang['dateAdded'][0] = 'Data aggiunta';
 $lang['dateAdded'][1] = 'In questo campo va specificata la data in cui l\'interazione ha avuto luogo.';
 
+$lang['person'][0] = 'Persona';
+$lang['person'][1] = 'In questo campo vengono memorizzati i dati della persona che ha eseguito l\'azione.';
+$lang['target'][0] = 'Obiettivo';
+$lang['target'][1] = 'In questo campo viene memorizzato l\'obiettivo dell\'interazione.';
+
 // user
 $lang['personalDataExplanation'] = 'Nota: i campi evidenziati in blu contengono informazioni personali.';
 $lang['ip'][0] = 'Indirizzo IP';
@@ -31,8 +36,6 @@ $lang['firstname'][0] = 'Nome';
 $lang['firstname'][1] = 'In questo campo verrà memorizzato il nome del visitatore.';
 $lang['lastname'][0] = 'Cognome';
 $lang['lastname'][1] = 'In questo campo verrà memorizzato il cognome del visitatore.';
-$lang['email'][0] = 'Indirizzo E-Mail';
-$lang['email'][1] = 'In questo campo verrà memorizzato l\'indirizzo E-Mail del visitatore.';
 $lang['agreement'][0] = 'Accetto l\'informativa sulla privacy.';
 $lang['agreement'][1] = 'In questo campo verrà memorizzato il consenso del visitatore.';
 $lang['member'][0] = 'Membro';
@@ -49,12 +52,8 @@ $lang['bundle'][0] = 'Pacchetto';
 $lang['bundle'][1] = 'Questo campo registra il pacchetto in cui è avvenuta l\'interazione.';
 $lang['bundleVersion'][0] = 'Versione pacchetto';
 $lang['bundleVersion'][1] = 'In questo campo viene registrata la versione del pacchetto.';
-$lang['dataContainer'][0] = 'Tabella';
-$lang['dataContainer'][1] = 'In questo campo viene registrata la tabella in cui l\utente si trovava.';
 $lang['description'][0] = 'Descrizione';
 $lang['description'][1] = 'In questo campo viene registrata una descrizione.';
-$lang['additionalData'][0] = 'Dati aggiuntivi';
-$lang['additionalData'][1] = 'In questo campo vengono registrati dei dati aggiuntivi dipendenti dal contesto.';
 $lang['module'][0] = 'Modulo';
 $lang['module'][1] = 'In questo campo viene registrato l\'ID del modulo.';
 $lang['moduleName'][0] = 'Nome del modulo';
@@ -97,9 +96,9 @@ $lang['reference'] = [
 /*
  * Legends
  */
-$lang['type_date_legend'] = 'Tipo ed ora';
-$lang['user_legend'] = 'Itente';
 $lang['interaction_legend'] = 'Interazione';
+$lang['context_legend'] = 'Contesto';
+$lang['user_legend'] = 'Itente';
 $lang['code_legend'] = 'Codice sorgente';
 
 /*

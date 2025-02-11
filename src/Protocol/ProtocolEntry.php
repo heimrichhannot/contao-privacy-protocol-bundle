@@ -22,12 +22,11 @@ class ProtocolEntry
     public ModuleModel|int|null $module = null;
 
     public function __construct(
+        public array        $person,
+        public array        $target,
         public ProtocolType $type,
         public int          $archiveId,
-        public array        $data,
-        public ?string      $email = null,
-        public ?string      $packageName = null,
-        public ?string      $dataContainer = null,
+        public ?string      $packageName = null
     )
     {
     }
